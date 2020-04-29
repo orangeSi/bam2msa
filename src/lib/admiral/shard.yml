@@ -1,0 +1,8 @@
+name: admiral
+version: 1.8.0
+crystal: 0.27.0
+authors:
+  - Jason Waldrip <jason@waldrip.net>
+description: |
+  A robust command line DSL for command line interfaces written in Crystal.
+license: MIT

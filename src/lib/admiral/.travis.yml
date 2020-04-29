@@ -1,0 +1,5 @@
+language: crystal
+crystal:
+  - latest
+script:
+  - make ci

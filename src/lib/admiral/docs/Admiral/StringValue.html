@@ -1,0 +1,5398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 0.24.2">
+
+
+<link href="../css/style.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript" src="../js/doc.js"></script>
+<script type="text/javascript">
+  CrystalDoc.base_path = "../";
+</script>
+
+  <meta id="repository-name" content="github.com/jwaldrip/admiral.cr">
+  <title>Admiral::StringValue - github.com/jwaldrip/admiral.cr</title>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false">
+    </div>
+
+    <div class="repository-links">
+      <a href="../index.html">README</a>
+    </div>
+  </div>
+
+  <div class="search-results" class="hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class="parent open current" data-id="github.com/jwaldrip/admiral.cr/Admiral" data-name="admiral">
+      <a href="../Admiral.html">Admiral</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/jwaldrip/admiral.cr/Admiral/ArgumentList" data-name="admiral::argumentlist">
+      <a href="../Admiral/ArgumentList.html">ArgumentList</a>
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/jwaldrip/admiral.cr/Admiral/Command" data-name="admiral::command">
+      <a href="../Admiral/Command.html">Command</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/jwaldrip/admiral.cr/Admiral/Command/MissingArgument" data-name="admiral::command::missingargument">
+      <a href="../Admiral/Command/MissingArgument.html">MissingArgument</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="github.com/jwaldrip/admiral.cr/Admiral/Error" data-name="admiral::error">
+      <a href="../Admiral/Error.html">Error</a>
+      
+    </li>
+  
+  <li class=" current" data-id="github.com/jwaldrip/admiral.cr/Admiral/StringValue" data-name="admiral::stringvalue">
+      <a href="../Admiral/StringValue.html">StringValue</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="github.com/jwaldrip/admiral.cr/Array" data-name="array(t)">
+      <a href="../Array.html">Array</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/jwaldrip/admiral.cr/Set" data-name="set(t)">
+      <a href="../Set.html">Set</a>
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">struct</span> Admiral::StringValue
+
+</h1>
+
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../Admiral/StringValue.html">Admiral::StringValue</a></li><li class="superclass">Struct</li><li class="superclass">Value</li><li class="superclass">Object</li></ul>
+
+
+
+
+  <h2>Overview</h2>
+
+  <p>A wrapper for arguments passed to <code><a href="../Admiral/Command.html#run-instance-method">Admiral::Command.run</a></code>
+All methods are delegated to <code>String</code>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>Defined in:</h2>
+  
+    
+      <a href="https://github.com/jwaldrip/admiral.cr/blob/07dde44b2d499c0a941b8da6270e1eac0baadcc2/src/admiral/string_value.cr#L3" target="_blank">admiral/string_value.cr</a>
+    
+    <br/>
+  
+
+
+
+
+
+  <h2>Constructors</h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#new%28value%3AString%29-class-method" class="signature"><strong>.new</strong>(value : String)</a>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+  <h2>Instance Method Summary</h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#%25%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#%</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#%25%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#%</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#%2A%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#*</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#%2A%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#*</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#%2B%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#+</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#%2B%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#+</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#<=></strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#<=></strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#%3D%3D%28arg%29-instance-method" class="signature"><strong>#==</strong>(arg)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#%3D~%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#=~</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#%3D~%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#=~</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#%5B%5D%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#[]</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#%5B%5D%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#[]</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#%5B%5D%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#[]?</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#%5B%5D%3F%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#[]?</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#ascii_only%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#ascii_only?</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#ascii_only%3F%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#ascii_only?</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#at%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#at</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#at%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#at</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#blank%3F%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#blank?</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#blank%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#blank?</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#byte_at%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#byte_at</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#byte_at%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#byte_at</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#byte_at%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#byte_at?</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#byte_at%3F%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#byte_at?</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#byte_index%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#byte_index</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#byte_index%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#byte_index</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#byte_index_to_char_index%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#byte_index_to_char_index</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#byte_index_to_char_index%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#byte_index_to_char_index</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#byte_slice%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#byte_slice</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#byte_slice%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#byte_slice</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#bytes%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#bytes</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#bytes%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#bytes</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#bytesize%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#bytesize</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#bytesize%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#bytesize</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#calc_excess_left%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#calc_excess_left</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#calc_excess_left%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#calc_excess_left</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#calc_excess_right%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#calc_excess_right</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#calc_excess_right%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#calc_excess_right</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#camelcase%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#camelcase</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#camelcase%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#camelcase</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#capitalize%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#capitalize</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#capitalize%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#capitalize</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#char_at%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#char_at</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#char_at%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#char_at</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#char_bytesize_at%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#char_bytesize_at</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#char_bytesize_at%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#char_bytesize_at</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#char_index_to_byte_index%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#char_index_to_byte_index</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#char_index_to_byte_index%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#char_index_to_byte_index</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#chars%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#chars</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#chars%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#chars</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#check_no_null_byte%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#check_no_null_byte</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#check_no_null_byte%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#check_no_null_byte</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#chomp%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#chomp</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#chomp%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#chomp</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#clone%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#clone</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#clone%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#clone</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#codepoint_at%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#codepoint_at</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#codepoint_at%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#codepoint_at</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#codepoints%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#codepoints</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#codepoints%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#codepoints</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#compare%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#compare</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#compare%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#compare</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#count%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#count</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#count%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#count</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#delete%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#delete</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#delete%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#delete</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#downcase%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#downcase</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#downcase%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#downcase</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#dump%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#dump</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#dump%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#dump</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#dump_char%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#dump_char</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#dump_char%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#dump_char</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#dump_hex%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#dump_hex</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#dump_hex%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#dump_hex</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#dump_or_inspect%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#dump_or_inspect</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#dump_or_inspect%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#dump_or_inspect</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#dump_or_inspect_char%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#dump_or_inspect_char</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#dump_or_inspect_char%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#dump_or_inspect_char</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#dump_or_inspect_unquoted%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#dump_or_inspect_unquoted</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#dump_or_inspect_unquoted%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#dump_or_inspect_unquoted</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#dump_unicode%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#dump_unicode</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#dump_unicode%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#dump_unicode</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#dump_unquoted%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#dump_unquoted</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#dump_unquoted%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#dump_unquoted</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#dup%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#dup</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#dup%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#dup</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#each_byte%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#each_byte</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#each_byte%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#each_byte</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#each_byte_index_and_char_index%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#each_byte_index_and_char_index</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#each_byte_index_and_char_index%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#each_byte_index_and_char_index</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#each_char%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#each_char</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#each_char%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#each_char</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#each_char_with_index%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#each_char_with_index</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#each_char_with_index%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#each_char_with_index</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#each_codepoint%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#each_codepoint</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#each_codepoint%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#each_codepoint</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#each_line%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#each_line</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#each_line%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#each_line</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#empty%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#empty?</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#empty%3F%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#empty?</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#encode%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#encode</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#encode%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#encode</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#ends_with%3F%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#ends_with?</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#ends_with%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#ends_with?</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#gsub%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#gsub</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#gsub%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#gsub</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#gsub_append%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#gsub_append</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#gsub_append%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#gsub_append</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#gsub_ascii_char%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#gsub_ascii_char</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#gsub_ascii_char%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#gsub_ascii_char</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#has_back_references%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#has_back_references?</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#has_back_references%3F%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#has_back_references?</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#hash%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#hash</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#hash%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#hash</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#hexbytes%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#hexbytes</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#hexbytes%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#hexbytes</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#hexbytes%3F%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#hexbytes?</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#hexbytes%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#hexbytes?</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#includes%3F%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#includes?</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#includes%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#includes?</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#index%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#index</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#index%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#index</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#insert%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#insert</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#insert%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#insert</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#insert_impl%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#insert_impl</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#insert_impl%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#insert_impl</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#inspect%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#inspect</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#inspect%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#inspect</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#inspect_char%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#inspect_char</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#inspect_char%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#inspect_char</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#inspect_unquoted%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#inspect_unquoted</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#inspect_unquoted%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#inspect_unquoted</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#just%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#just</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#just%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#just</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#lchop%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#lchop</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#lchop%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#lchop</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#lines%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#lines</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#lines%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#lines</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#ljust%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#ljust</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#ljust%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#ljust</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#lstrip%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#lstrip</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#lstrip%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#lstrip</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#match%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#match</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#match%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#match</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#partition%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#partition</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#partition%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#partition</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#pretty_print%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#pretty_print</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#pretty_print%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#pretty_print</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rchop%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#rchop</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rchop%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#rchop</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#remove_excess%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#remove_excess</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#remove_excess%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#remove_excess</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#remove_excess_left%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#remove_excess_left</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#remove_excess_left%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#remove_excess_left</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#remove_excess_right%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#remove_excess_right</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#remove_excess_right%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#remove_excess_right</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#reverse%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#reverse</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#reverse%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#reverse</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rindex%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#rindex</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rindex%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#rindex</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rjust%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#rjust</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rjust%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#rjust</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rpartition%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#rpartition</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rpartition%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#rpartition</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rstrip%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#rstrip</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#rstrip%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#rstrip</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#scan%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#scan</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#scan%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#scan</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#scan_backreferences%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#scan_backreferences</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#scan_backreferences%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#scan_backreferences</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#scrub%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#scrub</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#scrub%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#scrub</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#size%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#size</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#size%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#size</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#size_known%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#size_known?</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#size_known%3F%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#size_known?</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#split%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#split</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#split%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#split</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#split_by_empty_separator%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#split_by_empty_separator</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#split_by_empty_separator%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#split_by_empty_separator</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#squeeze%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#squeeze</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#squeeze%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#squeeze</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#starts_with%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#starts_with?</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#starts_with%3F%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#starts_with?</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#strip%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#strip</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#strip%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#strip</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#sub%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#sub</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#sub%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#sub</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#sub_append%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#sub_append</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#sub_append%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#sub_append</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#sub_index%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#sub_index</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#sub_index%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#sub_index</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#sub_range%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#sub_range</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#sub_range%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#sub_range</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#succ%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#succ</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#succ%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#succ</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_f%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#to_f</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_f%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#to_f</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_f32%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#to_f32</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_f32%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#to_f32</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_f32%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#to_f32?</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_f32%3F%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#to_f32?</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_f64%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#to_f64</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_f64%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#to_f64</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_f64%3F%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#to_f64?</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_f64%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#to_f64?</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_f%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#to_f?</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_f%3F%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#to_f?</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_f_impl%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#to_f_impl</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_f_impl%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#to_f_impl</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_i%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#to_i</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_i%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#to_i</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_i16%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#to_i16</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_i16%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#to_i16</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_i16%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#to_i16?</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_i16%3F%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#to_i16?</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_i32%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#to_i32</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_i32%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#to_i32</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_i32%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#to_i32?</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_i32%3F%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#to_i32?</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_i64%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#to_i64</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_i64%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#to_i64</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_i64%3F%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#to_i64?</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_i64%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#to_i64?</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_i8%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#to_i8</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_i8%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#to_i8</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_i8%3F%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#to_i8?</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_i8%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#to_i8?</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_i%3F%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#to_i?</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_i%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#to_i?</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_s%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#to_s</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_s%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#to_s</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_slice%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#to_slice</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_slice%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#to_slice</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_u16%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#to_u16</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_u16%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#to_u16</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_u16%3F%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#to_u16?</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_u16%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#to_u16?</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_u32%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#to_u32</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_u32%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#to_u32</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_u32%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#to_u32?</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_u32%3F%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#to_u32?</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_u64%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#to_u64</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_u64%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#to_u64</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_u64%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#to_u64?</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_u64%3F%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#to_u64?</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_u64_info%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#to_u64_info</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_u64_info%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#to_u64_info</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_u8%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#to_u8</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_u8%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#to_u8</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_u8%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#to_u8?</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_u8%3F%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#to_u8?</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_unsafe%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#to_unsafe</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_unsafe%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#to_unsafe</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_utf16%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#to_utf16</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_utf16%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#to_utf16</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#tr%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#tr</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#tr%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#tr</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#underscore%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#underscore</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#underscore%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#underscore</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#unsafe_byte_at%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#unsafe_byte_at</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#unsafe_byte_at%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#unsafe_byte_at</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#unsafe_byte_slice%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#unsafe_byte_slice</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#unsafe_byte_slice%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#unsafe_byte_slice</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#unsafe_byte_slice_string%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#unsafe_byte_slice_string</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#unsafe_byte_slice_string%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#unsafe_byte_slice_string</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#upcase%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#upcase</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#upcase%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#upcase</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#valid_encoding%3F%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method" class="signature"><strong>#valid_encoding?</strong>(*args, **options, &block)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#valid_encoding%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#valid_encoding?</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#value%3AString-instance-method" class="signature"><strong>#value</strong> : String</a>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+<div class="methods-inherited">
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+</div>
+
+
+  <h2>Constructor Detail</h2>
+  
+    <div class="entry-detail" id="new(value:String)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(value : String)
+
+        <a class="method-permalink" href="#new%28value%3AString%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/jwaldrip/admiral.cr/blob/07dde44b2d499c0a941b8da6270e1eac0baadcc2/src/admiral/string_value.cr#L6" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+
+
+  <h2>Instance Method Detail</h2>
+  
+    <div class="entry-detail" id="%(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>%</strong>(*args, **options)
+
+        <a class="method-permalink" href="#%25%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="%(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>%</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#%25%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="*(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>*</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#%2A%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="*(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>*</strong>(*args, **options)
+
+        <a class="method-permalink" href="#%2A%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="+(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>+</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#%2B%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="+(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>+</strong>(*args, **options)
+
+        <a class="method-permalink" href="#%2B%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong><=></strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong><=></strong>(*args, **options)
+
+        <a class="method-permalink" href="#%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="==(arg)-instance-method">
+      <div class="signature">
+        
+        def <strong>==</strong>(arg)
+
+        <a class="method-permalink" href="#%3D%3D%28arg%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="=~(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>=~</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#%3D~%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="=~(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>=~</strong>(*args, **options)
+
+        <a class="method-permalink" href="#%3D~%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="[](*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>[]</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#%5B%5D%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="[](*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>[]</strong>(*args, **options)
+
+        <a class="method-permalink" href="#%5B%5D%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="[]?(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>[]?</strong>(*args, **options)
+
+        <a class="method-permalink" href="#%5B%5D%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="[]?(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>[]?</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#%5B%5D%3F%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="ascii_only?(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>ascii_only?</strong>(*args, **options)
+
+        <a class="method-permalink" href="#ascii_only%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="ascii_only?(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>ascii_only?</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#ascii_only%3F%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="at(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>at</strong>(*args, **options)
+
+        <a class="method-permalink" href="#at%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="at(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>at</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#at%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="blank?(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>blank?</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#blank%3F%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="blank?(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>blank?</strong>(*args, **options)
+
+        <a class="method-permalink" href="#blank%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="byte_at(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>byte_at</strong>(*args, **options)
+
+        <a class="method-permalink" href="#byte_at%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="byte_at(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>byte_at</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#byte_at%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="byte_at?(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>byte_at?</strong>(*args, **options)
+
+        <a class="method-permalink" href="#byte_at%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="byte_at?(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>byte_at?</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#byte_at%3F%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="byte_index(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>byte_index</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#byte_index%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="byte_index(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>byte_index</strong>(*args, **options)
+
+        <a class="method-permalink" href="#byte_index%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="byte_index_to_char_index(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>byte_index_to_char_index</strong>(*args, **options)
+
+        <a class="method-permalink" href="#byte_index_to_char_index%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="byte_index_to_char_index(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>byte_index_to_char_index</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#byte_index_to_char_index%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="byte_slice(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>byte_slice</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#byte_slice%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="byte_slice(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>byte_slice</strong>(*args, **options)
+
+        <a class="method-permalink" href="#byte_slice%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bytes(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>bytes</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#bytes%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bytes(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>bytes</strong>(*args, **options)
+
+        <a class="method-permalink" href="#bytes%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bytesize(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>bytesize</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#bytesize%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bytesize(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>bytesize</strong>(*args, **options)
+
+        <a class="method-permalink" href="#bytesize%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="calc_excess_left(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>calc_excess_left</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#calc_excess_left%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="calc_excess_left(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>calc_excess_left</strong>(*args, **options)
+
+        <a class="method-permalink" href="#calc_excess_left%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="calc_excess_right(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>calc_excess_right</strong>(*args, **options)
+
+        <a class="method-permalink" href="#calc_excess_right%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="calc_excess_right(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>calc_excess_right</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#calc_excess_right%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="camelcase(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>camelcase</strong>(*args, **options)
+
+        <a class="method-permalink" href="#camelcase%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="camelcase(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>camelcase</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#camelcase%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="capitalize(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>capitalize</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#capitalize%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="capitalize(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>capitalize</strong>(*args, **options)
+
+        <a class="method-permalink" href="#capitalize%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="char_at(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>char_at</strong>(*args, **options)
+
+        <a class="method-permalink" href="#char_at%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="char_at(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>char_at</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#char_at%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="char_bytesize_at(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>char_bytesize_at</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#char_bytesize_at%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="char_bytesize_at(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>char_bytesize_at</strong>(*args, **options)
+
+        <a class="method-permalink" href="#char_bytesize_at%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="char_index_to_byte_index(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>char_index_to_byte_index</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#char_index_to_byte_index%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="char_index_to_byte_index(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>char_index_to_byte_index</strong>(*args, **options)
+
+        <a class="method-permalink" href="#char_index_to_byte_index%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="chars(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>chars</strong>(*args, **options)
+
+        <a class="method-permalink" href="#chars%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="chars(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>chars</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#chars%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="check_no_null_byte(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>check_no_null_byte</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#check_no_null_byte%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="check_no_null_byte(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>check_no_null_byte</strong>(*args, **options)
+
+        <a class="method-permalink" href="#check_no_null_byte%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="chomp(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>chomp</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#chomp%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="chomp(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>chomp</strong>(*args, **options)
+
+        <a class="method-permalink" href="#chomp%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="clone(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>clone</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#clone%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="clone(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>clone</strong>(*args, **options)
+
+        <a class="method-permalink" href="#clone%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="codepoint_at(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>codepoint_at</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#codepoint_at%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="codepoint_at(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>codepoint_at</strong>(*args, **options)
+
+        <a class="method-permalink" href="#codepoint_at%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="codepoints(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>codepoints</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#codepoints%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="codepoints(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>codepoints</strong>(*args, **options)
+
+        <a class="method-permalink" href="#codepoints%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="compare(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>compare</strong>(*args, **options)
+
+        <a class="method-permalink" href="#compare%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="compare(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>compare</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#compare%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="count(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>count</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#count%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="count(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>count</strong>(*args, **options)
+
+        <a class="method-permalink" href="#count%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="delete(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>delete</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#delete%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="delete(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>delete</strong>(*args, **options)
+
+        <a class="method-permalink" href="#delete%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="downcase(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>downcase</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#downcase%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="downcase(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>downcase</strong>(*args, **options)
+
+        <a class="method-permalink" href="#downcase%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="dump(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>dump</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#dump%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="dump(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>dump</strong>(*args, **options)
+
+        <a class="method-permalink" href="#dump%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="dump_char(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>dump_char</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#dump_char%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="dump_char(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>dump_char</strong>(*args, **options)
+
+        <a class="method-permalink" href="#dump_char%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="dump_hex(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>dump_hex</strong>(*args, **options)
+
+        <a class="method-permalink" href="#dump_hex%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="dump_hex(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>dump_hex</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#dump_hex%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="dump_or_inspect(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>dump_or_inspect</strong>(*args, **options)
+
+        <a class="method-permalink" href="#dump_or_inspect%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="dump_or_inspect(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>dump_or_inspect</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#dump_or_inspect%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="dump_or_inspect_char(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>dump_or_inspect_char</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#dump_or_inspect_char%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="dump_or_inspect_char(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>dump_or_inspect_char</strong>(*args, **options)
+
+        <a class="method-permalink" href="#dump_or_inspect_char%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="dump_or_inspect_unquoted(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>dump_or_inspect_unquoted</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#dump_or_inspect_unquoted%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="dump_or_inspect_unquoted(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>dump_or_inspect_unquoted</strong>(*args, **options)
+
+        <a class="method-permalink" href="#dump_or_inspect_unquoted%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="dump_unicode(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>dump_unicode</strong>(*args, **options)
+
+        <a class="method-permalink" href="#dump_unicode%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="dump_unicode(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>dump_unicode</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#dump_unicode%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="dump_unquoted(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>dump_unquoted</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#dump_unquoted%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="dump_unquoted(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>dump_unquoted</strong>(*args, **options)
+
+        <a class="method-permalink" href="#dump_unquoted%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="dup(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>dup</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#dup%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="dup(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>dup</strong>(*args, **options)
+
+        <a class="method-permalink" href="#dup%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="each_byte(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>each_byte</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#each_byte%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="each_byte(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>each_byte</strong>(*args, **options)
+
+        <a class="method-permalink" href="#each_byte%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="each_byte_index_and_char_index(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>each_byte_index_and_char_index</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#each_byte_index_and_char_index%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="each_byte_index_and_char_index(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>each_byte_index_and_char_index</strong>(*args, **options)
+
+        <a class="method-permalink" href="#each_byte_index_and_char_index%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="each_char(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>each_char</strong>(*args, **options)
+
+        <a class="method-permalink" href="#each_char%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="each_char(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>each_char</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#each_char%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="each_char_with_index(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>each_char_with_index</strong>(*args, **options)
+
+        <a class="method-permalink" href="#each_char_with_index%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="each_char_with_index(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>each_char_with_index</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#each_char_with_index%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="each_codepoint(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>each_codepoint</strong>(*args, **options)
+
+        <a class="method-permalink" href="#each_codepoint%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="each_codepoint(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>each_codepoint</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#each_codepoint%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="each_line(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>each_line</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#each_line%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="each_line(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>each_line</strong>(*args, **options)
+
+        <a class="method-permalink" href="#each_line%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="empty?(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>empty?</strong>(*args, **options)
+
+        <a class="method-permalink" href="#empty%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="empty?(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>empty?</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#empty%3F%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="encode(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>encode</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#encode%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="encode(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>encode</strong>(*args, **options)
+
+        <a class="method-permalink" href="#encode%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="ends_with?(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>ends_with?</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#ends_with%3F%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="ends_with?(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>ends_with?</strong>(*args, **options)
+
+        <a class="method-permalink" href="#ends_with%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="gsub(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>gsub</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#gsub%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="gsub(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>gsub</strong>(*args, **options)
+
+        <a class="method-permalink" href="#gsub%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="gsub_append(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>gsub_append</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#gsub_append%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="gsub_append(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>gsub_append</strong>(*args, **options)
+
+        <a class="method-permalink" href="#gsub_append%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="gsub_ascii_char(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>gsub_ascii_char</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#gsub_ascii_char%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="gsub_ascii_char(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>gsub_ascii_char</strong>(*args, **options)
+
+        <a class="method-permalink" href="#gsub_ascii_char%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="has_back_references?(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>has_back_references?</strong>(*args, **options)
+
+        <a class="method-permalink" href="#has_back_references%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="has_back_references?(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>has_back_references?</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#has_back_references%3F%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="hash(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>hash</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#hash%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="hash(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>hash</strong>(*args, **options)
+
+        <a class="method-permalink" href="#hash%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="hexbytes(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>hexbytes</strong>(*args, **options)
+
+        <a class="method-permalink" href="#hexbytes%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="hexbytes(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>hexbytes</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#hexbytes%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="hexbytes?(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>hexbytes?</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#hexbytes%3F%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="hexbytes?(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>hexbytes?</strong>(*args, **options)
+
+        <a class="method-permalink" href="#hexbytes%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="includes?(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>includes?</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#includes%3F%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="includes?(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>includes?</strong>(*args, **options)
+
+        <a class="method-permalink" href="#includes%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="index(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>index</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#index%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="index(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>index</strong>(*args, **options)
+
+        <a class="method-permalink" href="#index%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="insert(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>insert</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#insert%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="insert(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>insert</strong>(*args, **options)
+
+        <a class="method-permalink" href="#insert%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="insert_impl(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>insert_impl</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#insert_impl%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="insert_impl(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>insert_impl</strong>(*args, **options)
+
+        <a class="method-permalink" href="#insert_impl%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="inspect(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>inspect</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#inspect%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="inspect(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>inspect</strong>(*args, **options)
+
+        <a class="method-permalink" href="#inspect%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="inspect_char(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>inspect_char</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#inspect_char%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="inspect_char(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>inspect_char</strong>(*args, **options)
+
+        <a class="method-permalink" href="#inspect_char%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="inspect_unquoted(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>inspect_unquoted</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#inspect_unquoted%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="inspect_unquoted(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>inspect_unquoted</strong>(*args, **options)
+
+        <a class="method-permalink" href="#inspect_unquoted%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="just(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>just</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#just%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="just(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>just</strong>(*args, **options)
+
+        <a class="method-permalink" href="#just%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="lchop(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>lchop</strong>(*args, **options)
+
+        <a class="method-permalink" href="#lchop%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="lchop(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>lchop</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#lchop%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="lines(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>lines</strong>(*args, **options)
+
+        <a class="method-permalink" href="#lines%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="lines(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>lines</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#lines%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="ljust(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>ljust</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#ljust%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="ljust(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>ljust</strong>(*args, **options)
+
+        <a class="method-permalink" href="#ljust%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="lstrip(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>lstrip</strong>(*args, **options)
+
+        <a class="method-permalink" href="#lstrip%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="lstrip(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>lstrip</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#lstrip%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="match(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>match</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#match%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="match(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>match</strong>(*args, **options)
+
+        <a class="method-permalink" href="#match%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="partition(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>partition</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#partition%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="partition(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>partition</strong>(*args, **options)
+
+        <a class="method-permalink" href="#partition%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="pretty_print(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>pretty_print</strong>(*args, **options)
+
+        <a class="method-permalink" href="#pretty_print%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="pretty_print(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>pretty_print</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#pretty_print%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rchop(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>rchop</strong>(*args, **options)
+
+        <a class="method-permalink" href="#rchop%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rchop(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>rchop</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#rchop%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="remove_excess(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>remove_excess</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#remove_excess%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="remove_excess(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>remove_excess</strong>(*args, **options)
+
+        <a class="method-permalink" href="#remove_excess%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="remove_excess_left(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>remove_excess_left</strong>(*args, **options)
+
+        <a class="method-permalink" href="#remove_excess_left%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="remove_excess_left(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>remove_excess_left</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#remove_excess_left%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="remove_excess_right(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>remove_excess_right</strong>(*args, **options)
+
+        <a class="method-permalink" href="#remove_excess_right%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="remove_excess_right(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>remove_excess_right</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#remove_excess_right%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="reverse(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>reverse</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#reverse%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="reverse(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>reverse</strong>(*args, **options)
+
+        <a class="method-permalink" href="#reverse%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rindex(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>rindex</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#rindex%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rindex(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>rindex</strong>(*args, **options)
+
+        <a class="method-permalink" href="#rindex%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rjust(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>rjust</strong>(*args, **options)
+
+        <a class="method-permalink" href="#rjust%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rjust(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>rjust</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#rjust%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rpartition(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>rpartition</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#rpartition%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rpartition(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>rpartition</strong>(*args, **options)
+
+        <a class="method-permalink" href="#rpartition%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rstrip(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>rstrip</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#rstrip%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="rstrip(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>rstrip</strong>(*args, **options)
+
+        <a class="method-permalink" href="#rstrip%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="scan(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>scan</strong>(*args, **options)
+
+        <a class="method-permalink" href="#scan%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="scan(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>scan</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#scan%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="scan_backreferences(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>scan_backreferences</strong>(*args, **options)
+
+        <a class="method-permalink" href="#scan_backreferences%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="scan_backreferences(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>scan_backreferences</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#scan_backreferences%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="scrub(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>scrub</strong>(*args, **options)
+
+        <a class="method-permalink" href="#scrub%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="scrub(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>scrub</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#scrub%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="size(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>size</strong>(*args, **options)
+
+        <a class="method-permalink" href="#size%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="size(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>size</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#size%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="size_known?(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>size_known?</strong>(*args, **options)
+
+        <a class="method-permalink" href="#size_known%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="size_known?(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>size_known?</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#size_known%3F%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="split(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>split</strong>(*args, **options)
+
+        <a class="method-permalink" href="#split%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="split(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>split</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#split%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="split_by_empty_separator(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>split_by_empty_separator</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#split_by_empty_separator%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="split_by_empty_separator(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>split_by_empty_separator</strong>(*args, **options)
+
+        <a class="method-permalink" href="#split_by_empty_separator%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="squeeze(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>squeeze</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#squeeze%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="squeeze(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>squeeze</strong>(*args, **options)
+
+        <a class="method-permalink" href="#squeeze%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="starts_with?(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>starts_with?</strong>(*args, **options)
+
+        <a class="method-permalink" href="#starts_with%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="starts_with?(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>starts_with?</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#starts_with%3F%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="strip(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>strip</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#strip%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="strip(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>strip</strong>(*args, **options)
+
+        <a class="method-permalink" href="#strip%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="sub(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>sub</strong>(*args, **options)
+
+        <a class="method-permalink" href="#sub%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="sub(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>sub</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#sub%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="sub_append(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>sub_append</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#sub_append%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="sub_append(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>sub_append</strong>(*args, **options)
+
+        <a class="method-permalink" href="#sub_append%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="sub_index(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>sub_index</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#sub_index%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="sub_index(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>sub_index</strong>(*args, **options)
+
+        <a class="method-permalink" href="#sub_index%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="sub_range(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>sub_range</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#sub_range%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="sub_range(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>sub_range</strong>(*args, **options)
+
+        <a class="method-permalink" href="#sub_range%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="succ(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>succ</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#succ%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="succ(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>succ</strong>(*args, **options)
+
+        <a class="method-permalink" href="#succ%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_f(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_f</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#to_f%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_f(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_f</strong>(*args, **options)
+
+        <a class="method-permalink" href="#to_f%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_f32(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_f32</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#to_f32%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_f32(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_f32</strong>(*args, **options)
+
+        <a class="method-permalink" href="#to_f32%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_f32?(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_f32?</strong>(*args, **options)
+
+        <a class="method-permalink" href="#to_f32%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_f32?(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_f32?</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#to_f32%3F%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_f64(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_f64</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#to_f64%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_f64(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_f64</strong>(*args, **options)
+
+        <a class="method-permalink" href="#to_f64%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_f64?(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_f64?</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#to_f64%3F%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_f64?(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_f64?</strong>(*args, **options)
+
+        <a class="method-permalink" href="#to_f64%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_f?(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_f?</strong>(*args, **options)
+
+        <a class="method-permalink" href="#to_f%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_f?(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_f?</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#to_f%3F%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_f_impl(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_f_impl</strong>(*args, **options)
+
+        <a class="method-permalink" href="#to_f_impl%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_f_impl(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_f_impl</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#to_f_impl%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_i(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_i</strong>(*args, **options)
+
+        <a class="method-permalink" href="#to_i%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_i(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_i</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#to_i%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_i16(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_i16</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#to_i16%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_i16(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_i16</strong>(*args, **options)
+
+        <a class="method-permalink" href="#to_i16%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_i16?(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_i16?</strong>(*args, **options)
+
+        <a class="method-permalink" href="#to_i16%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_i16?(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_i16?</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#to_i16%3F%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_i32(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_i32</strong>(*args, **options)
+
+        <a class="method-permalink" href="#to_i32%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_i32(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_i32</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#to_i32%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_i32?(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_i32?</strong>(*args, **options)
+
+        <a class="method-permalink" href="#to_i32%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_i32?(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_i32?</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#to_i32%3F%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_i64(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_i64</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#to_i64%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_i64(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_i64</strong>(*args, **options)
+
+        <a class="method-permalink" href="#to_i64%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_i64?(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_i64?</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#to_i64%3F%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_i64?(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_i64?</strong>(*args, **options)
+
+        <a class="method-permalink" href="#to_i64%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_i8(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_i8</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#to_i8%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_i8(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_i8</strong>(*args, **options)
+
+        <a class="method-permalink" href="#to_i8%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_i8?(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_i8?</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#to_i8%3F%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_i8?(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_i8?</strong>(*args, **options)
+
+        <a class="method-permalink" href="#to_i8%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_i?(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_i?</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#to_i%3F%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_i?(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_i?</strong>(*args, **options)
+
+        <a class="method-permalink" href="#to_i%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_s(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_s</strong>(*args, **options)
+
+        <a class="method-permalink" href="#to_s%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_s(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_s</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#to_s%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_slice(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_slice</strong>(*args, **options)
+
+        <a class="method-permalink" href="#to_slice%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_slice(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_slice</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#to_slice%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_u16(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_u16</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#to_u16%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_u16(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_u16</strong>(*args, **options)
+
+        <a class="method-permalink" href="#to_u16%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_u16?(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_u16?</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#to_u16%3F%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_u16?(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_u16?</strong>(*args, **options)
+
+        <a class="method-permalink" href="#to_u16%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_u32(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_u32</strong>(*args, **options)
+
+        <a class="method-permalink" href="#to_u32%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_u32(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_u32</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#to_u32%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_u32?(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_u32?</strong>(*args, **options)
+
+        <a class="method-permalink" href="#to_u32%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_u32?(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_u32?</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#to_u32%3F%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_u64(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_u64</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#to_u64%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_u64(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_u64</strong>(*args, **options)
+
+        <a class="method-permalink" href="#to_u64%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_u64?(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_u64?</strong>(*args, **options)
+
+        <a class="method-permalink" href="#to_u64%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_u64?(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_u64?</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#to_u64%3F%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_u64_info(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_u64_info</strong>(*args, **options)
+
+        <a class="method-permalink" href="#to_u64_info%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_u64_info(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_u64_info</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#to_u64_info%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_u8(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_u8</strong>(*args, **options)
+
+        <a class="method-permalink" href="#to_u8%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_u8(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_u8</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#to_u8%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_u8?(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_u8?</strong>(*args, **options)
+
+        <a class="method-permalink" href="#to_u8%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_u8?(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_u8?</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#to_u8%3F%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_unsafe(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_unsafe</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#to_unsafe%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_unsafe(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_unsafe</strong>(*args, **options)
+
+        <a class="method-permalink" href="#to_unsafe%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_utf16(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_utf16</strong>(*args, **options)
+
+        <a class="method-permalink" href="#to_utf16%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_utf16(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_utf16</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#to_utf16%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="tr(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>tr</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#tr%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="tr(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>tr</strong>(*args, **options)
+
+        <a class="method-permalink" href="#tr%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="underscore(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>underscore</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#underscore%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="underscore(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>underscore</strong>(*args, **options)
+
+        <a class="method-permalink" href="#underscore%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="unsafe_byte_at(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>unsafe_byte_at</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#unsafe_byte_at%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="unsafe_byte_at(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>unsafe_byte_at</strong>(*args, **options)
+
+        <a class="method-permalink" href="#unsafe_byte_at%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="unsafe_byte_slice(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>unsafe_byte_slice</strong>(*args, **options)
+
+        <a class="method-permalink" href="#unsafe_byte_slice%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="unsafe_byte_slice(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>unsafe_byte_slice</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#unsafe_byte_slice%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="unsafe_byte_slice_string(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>unsafe_byte_slice_string</strong>(*args, **options)
+
+        <a class="method-permalink" href="#unsafe_byte_slice_string%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="unsafe_byte_slice_string(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>unsafe_byte_slice_string</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#unsafe_byte_slice_string%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="upcase(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>upcase</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#upcase%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="upcase(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>upcase</strong>(*args, **options)
+
+        <a class="method-permalink" href="#upcase%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="valid_encoding?(*args,**options,&amp;block)-instance-method">
+      <div class="signature">
+        
+        def <strong>valid_encoding?</strong>(*args, **options, &block)
+
+        <a class="method-permalink" href="#valid_encoding%3F%28%2Aargs%2C%2A%2Aoptions%2C%26block%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="valid_encoding?(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>valid_encoding?</strong>(*args, **options)
+
+        <a class="method-permalink" href="#valid_encoding%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="value:String-instance-method">
+      <div class="signature">
+        
+        def <strong>value</strong> : String
+
+        <a class="method-permalink" href="#value%3AString-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/jwaldrip/admiral.cr/blob/07dde44b2d499c0a941b8da6270e1eac0baadcc2/src/admiral/string_value.cr#L4" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+
+</div>
+
+</body>
+</html>
