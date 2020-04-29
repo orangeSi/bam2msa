@@ -1,0 +1,2 @@
+* linguist-vendored
+*.cr linguist-vendored=false
