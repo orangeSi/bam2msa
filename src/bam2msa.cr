@@ -40,10 +40,16 @@ class Bam2Msa < Admiral::Command
 				#arr[5] # cigar
 				ref_msa = ""
 				ref_seq = ref[arr[2]]
+				ref_pos = -1 + arr[3].to_i32
+
 				query_msa = ""
 				query_seq = arr[9]
-				ref_pos = 0
 				query_pos = 0
+				
+				if ref_pos != 0
+					ref_msa = ref_seq[0...ref_pos] 
+					(0...ref_pos).each {|e| query_msa += "-"}
+				end
 				cigar = arr[5]
 				#puts "ref_seq is #{ref_seq}, query_seq is #{query_seq}"	
 
@@ -68,10 +74,16 @@ class Bam2Msa < Admiral::Command
 						end
 					end
 				end
+				#puts ">#{arr[2]}\n#{ref_msa}\n>#{arr[0]}\n#{query_msa}"
+				if ref_seq.size >= ref_pos
+					ref_msa += ref_seq[ref_pos..]
+					(ref_pos...ref_seq.size).each {|e| query_msa +="-"}
+				else
+					raise("error: ref_seq.size #{ref_seq.size} ref_pos #{ref_pos}")
+				end
 				if query_msa.size != ref_msa.size
 					raise("error: size not equal for #{arr[0]} and #{cigar}. #{query_msa.size} != #{ref_msa.size}")
 				end
-				#puts ">#{arr[2]}\n#{ref_msa}\n>#{arr[0]}\n#{query_msa}"
 				puts "#{arr[2]}\t#{ref_msa}\t#{arr[0]}\t#{query_msa}\t#{cigar}\t#{arr[1]}"
 				
 				
