@@ -84,6 +84,7 @@ class Bam2Msa < Admiral::Command
 				if query_msa.size != ref_msa.size
 					raise("error: size not equal for #{arr[0]} and #{cigar}. #{query_msa.size} != #{ref_msa.size}")
 				end
+				raise "error: ref_seq #{arr[2]} not equal\n" if ref_msa.gsub(/-/, "") != ref_seq
 				puts "#{arr[2]}\t#{ref_msa}\t#{arr[0]}\t#{query_msa}\t#{cigar}\t#{arr[1]}"
 				
 				
