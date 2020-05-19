@@ -1,4 +1,5 @@
 require "admiral"
+require "./readfasta"
 class Bam2Msa < Admiral::Command
 	define_argument ref,
 		description: "ref fasta file",
@@ -6,6 +7,9 @@ class Bam2Msa < Admiral::Command
 	define_argument bam,
 		description: "bam alignemnt file",
 		required: true
+	define_flag regions : String,
+		default: "",
+		description: "default display the msa of whole ref for every read. If not, set the specific regsion, ex: chr1:100-300,chr3:500-800"
 	define_flag primary_only : Int32,
 		default: 1_i32,
 		description: "only for primary alignment. 0 mean all alingment, 1 is only primary alignment"
@@ -20,14 +24,12 @@ class Bam2Msa < Admiral::Command
 			Bam2Msa.run "--help"
 		end
 		ref = read_fasta(arguments.ref)
-		msa = convert_bam2msa(arguments.bam, ref, flags.primary_only)
+		msa = convert_bam2msa(arguments.bam, ref, flags.primary_only, flags.regions)
 	end
-	def read_fasta(f : String)
-		ref = {} of String => String
-		return  ref
-	end
-	def convert_bam2msa(bam : String, ref : Hash(String, String), primary_only : Int32)
+	def convert_bam2msa(bam : String, ref : Hash(String, String), primary_only : Int32, regions : String = "")
+		raise "error: cann't find samtools in $PATH" unless Process.find_executable("samtools")
 		puts "#refid\tref_msa\tquery_id\tquery_msa\tcigar\tflag"
+		gregions = parser_regions(regions)
 		Process.run("samtools view #{bam}", shell: true) do |proc|
 			while line = proc.output.gets
 				#puts line
@@ -92,25 +94,7 @@ class Bam2Msa < Admiral::Command
 		end
 	end
 
-	def read_fasta(fasta : String)
-		ref = {} of String => String
-		id = ""
-		seq = ""
-		File.each_line(fasta) do |line|
-			if line.match(/^>(\S+)/)
-				unless id == ""
-					ref[id] = seq.gsub(/\s/, "")
-				end
-				line =~ /^>(\S+)/
-				id = $1
-				seq = ""
-				next
-			else
-				seq += line
-			end
-		end
-		ref[id] = seq.gsub(/\s/, "")
-		return ref
+	def parser_regions(regions : String)
 	end
 
 	def split_cigar(cigar : String)
