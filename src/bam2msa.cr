@@ -28,21 +28,38 @@ class Bam2Msa < Admiral::Command
 	end
 	def convert_bam2msa(bam : String, ref : Hash(String, String), primary_only : Int32, regions : String = "")
 		raise "error: cann't find samtools in $PATH" unless Process.find_executable("samtools")
+		# title
 		puts "#refid\tref_msa\tquery_id\tquery_msa\tcigar\tflag"
-		gregions = parser_regions(regions)
+
+		# get regions
+		rgs = parser_regions(regions)
+		rgs_key_size = rgs.keys.size
+
 		Process.run("samtools view #{bam}", shell: true) do |proc|
 			while line = proc.output.gets
 				#puts line
 				# qid, flag, refid, 
 				arr = line.split(/\t/)
-				next if primary_only && (arr[1].to_i32 & 256) != 0 
-				arr[0] = "_R_#{arr[0]}" if (arr[1].to_i32 & 16) != 0 # reversed read map to ref
+				rflag = arr[1].to_i32
+				ref_id = arr[2]
+				next if rgs_key_size > 0 && ! rgs.has_key?(ref_id)
+				next if primary_only && (rflag & 256) != 0
+				query_id = arr[0]
+				arr[0] = "_R_#{query_id}" if (rflag & 16) != 0 # reversed read map to ref
 				#ref[arr[2]] # ref fasta
 				#arr[9] # SEQ
 				#arr[5] # cigar
+				pos = arr[3].to_i32
+				cigar = arr[5]
+
+				# cut the cigar for regions
+				if rgs.has_key?(ref_id)
+					pos, cigar = cut_cigar_by_region(cigar, pos, rgs[ref_id].s, rgs[ref_id].e)
+				end
+				
 				ref_msa = ""
-				ref_seq = ref[arr[2]]
-				ref_pos = -1 + arr[3].to_i32
+				ref_seq = ref[ref_id]
+				ref_pos = -1 + pos
 
 				query_msa = ""
 				query_seq = arr[9]
@@ -52,13 +69,12 @@ class Bam2Msa < Admiral::Command
 					ref_msa = ref_seq[0...ref_pos] 
 					(0...ref_pos).each {|e| query_msa += "-"}
 				end
-				cigar = arr[5]
 				#puts "ref_seq is #{ref_seq}, query_seq is #{query_seq}"	
 
 				split_cigar(cigar).each do |e|
 					if e =~ /(\d+)(.)/
 						clen = $1.to_i32
-						ctype = $2  # MIDNSHP=X
+						ctype = $2  # MIDNSHP=X, reference to http://samtools.github.io/hts-specs/SAMv1.pdf
 						#puts "#{clen}#{ctype}"	
 						if ctype == "M" || ctype == "=" || ctype == "X"
 							ref_msa += ref_seq[ref_pos...ref_pos+clen]
@@ -93,8 +109,65 @@ class Bam2Msa < Admiral::Command
 			end
 		end
 	end
+	
+	def cut_cigar_by_region(cigar : String, pos : Int32|Int64, rg_start : Int32|Int64, rg_end : Int32|Int64, read_id : String, ref_id : String)
+		#sitution1:
+			#region ----  *******
+			#             ------- cigar
+		return pos, cigar if rg_end < pos
+		
+		#sitution2:
+			#			  ---- region
+			#cigar ------ ****
+		
+		#sitution3:
+			#		   ------ region
+			#          **
+			#cigar ------ 
+
+		#sitution4:
+			# region ------ 
+			#           ***
+			#           ------ cigar
+
+		#sitution5:
+			#		   ------ region
+			#          ******
+			#cigar --------------
+		
+		#sitution6:
+			#	 -------------- region
+			#      ********
+			#cigar --------
+		
+		
+		raise "error: occur unexcept situation for read #{read_id} and ref #{ref_id}. when rg_start=#{rg_start},rg_end=#{rg_end} and position=#{pos},cigar=#{cigar}\n"	
+		
+	end
 
 	def parser_regions(regions : String)
+		#chr1:100-300,chr3:500-800
+		rgs = {} of String => RG
+		return rgs if regions == ""
+		regions.split(/,/).each do |e|
+			next if e == ""
+			if e =~ /^([^:]+):(\d+)-(\d+)$/
+				if $2 <= $3
+					rgs[$1] = RG.new($2.to_i, $3.to_i)
+				else
+					rgs[$1] = RG.new($3.to_i, $2.to_i)
+				end
+			else
+				raise "error: not support region #{e}, example: chr1:100-300\n"
+			end
+		end
+		return rgs
+	end
+
+	struct RG
+		property s, e
+		def initialize(@s : Int32|Int64, @e : Int32|Int64)
+		end
 	end
 
 	def split_cigar(cigar : String)
