@@ -18,8 +18,9 @@ Flags:
 Arguments:
   ref (required)               # ref fasta file
   bam (required)               # bam alignemnt file
+```
 
-
+```
 $cd test && cat demo.sh 
 set -vex
 ./bam2msa ref.fa out.bwa.bam >out.bam2msa
