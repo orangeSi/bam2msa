@@ -29,7 +29,7 @@ class Bam2Msa < Admiral::Command
 	def convert_bam2msa(bam : String, ref : Hash(String, String), primary_only : Int32, regions : String = "")
 		raise "error: cann't find samtools in $PATH" unless Process.find_executable("samtools")
 		# title
-		puts "#refid\tref_msa\tquery_id\tquery_msa\tcigar\tflag"
+		puts "#refid\tref_msa\tquery_id\tquery_msa\tconsensus_msa\tcigar\tflag"
 
 		# get regions
 		rgs = parser_regions(regions)
@@ -54,7 +54,7 @@ class Bam2Msa < Admiral::Command
 
 				# cut the cigar for regions
 				if rgs.has_key?(ref_id)
-					pos, cigar = cut_cigar_by_region(cigar, pos, rgs[ref_id].s, rgs[ref_id].e)
+					pos, cigar = cut_cigar_by_region(cigar, pos, rgs[ref_id].s, rgs[ref_id].e, query_id, ref_id)
 				end
 				
 				ref_msa = ""
@@ -102,8 +102,37 @@ class Bam2Msa < Admiral::Command
 				if query_msa.size != ref_msa.size
 					raise("error: size not equal for #{arr[0]} and #{cigar}. #{query_msa.size} != #{ref_msa.size}")
 				end
+				
 				raise "error: ref_seq #{arr[2]} not equal\n" if ref_msa.gsub(/-/, "") != ref_seq
-				puts "#{arr[2]}\t#{ref_msa}\t#{arr[0]}\t#{query_msa}\t#{cigar}\t#{arr[1]}"
+
+				# get consensue sequence
+				consensus = ""
+				query_msa.split(//).zip(ref_msa.split(//)) do |qe, re|
+					if qe == re
+						if qe != "-" # match
+							consensus +="="
+						else
+							raise "error: get both - for query=#{query_id} and ref=#{ref_id} for cigar=#{cigar}\n"
+						end
+					else
+						if qe != "-" && re != "-" #mismatch
+							consensus +="X"
+						else # indel
+							if qe == "-" # deletion
+								consensus +="D"
+							else # insertion
+								consensus +="I"
+							end
+							
+						end
+					end
+				end
+					
+				if query_msa.size != consensus.size
+					raise("error: consensus and query_msa size not equal for #{arr[0]} and #{cigar}. #{query_msa.size} != #{consensus.size}, consensus=#{consensus}")
+				end
+				
+				puts "#{arr[2]}\t#{ref_msa}\t#{arr[0]}\t#{query_msa}\t#{consensus}\t#{cigar}\t#{arr[1]}"
 				
 				
 			end
