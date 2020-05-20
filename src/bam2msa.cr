@@ -23,7 +23,9 @@ class Bam2Msa < Admiral::Command
 			puts "Contact: ilikeorangeapple@gmail.com or go to https://github.com/orangeSi/grepfile/issues"
 			Bam2Msa.run "--help"
 		end
-		ref = read_fasta(arguments.ref)
+		
+		rgs = parser_regions(flags.regions)
+		ref = read_fasta(arguments.ref, chrs: rgs.keys)
 		msa = convert_bam2msa(arguments.bam, ref, flags.primary_only, flags.regions)
 	end
 	def convert_bam2msa(bam : String, ref : Hash(String, String), primary_only : Int32, regions : String = "")
