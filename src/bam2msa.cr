@@ -57,7 +57,7 @@ class Bam2Msa < Admiral::Command
         pos = arr[3].to_i32
         cigar = arr[5]
 
-        # cut the cigar for regions
+        # if specific --regions chr1:200-300 , then cut the cigar for --regions
         if rgs.has_key?(ref_id)
           pos, cigar = cut_cigar_by_region(cigar, pos, rgs[ref_id].s, rgs[ref_id].e, query_id, ref_id)
         end
@@ -144,36 +144,58 @@ class Bam2Msa < Admiral::Command
     end
   end
   
-  def cut_cigar_by_region(cigar : String, pos : Int32|Int64, rg_start : Int32|Int64, rg_end : Int32|Int64, read_id : String, ref_id : String)
+  def drive_into_cigar(cigar, pos) #caculate start-end of every type of in the cigar
+    
+    
+    
+    return crs
+  end
+
+  def cut_cigar_by_region(cigar : String, pos : Int32, rg_start : Int32, rg_end : Int32, read_id : String, ref_id : String)
+    new_cigar = ""
+    new_pos = 0
+    
     #sitution1:
-      #region ----  *******
-      #             ------- cigar
-    return pos, cigar if rg_end < pos
+      #region ----  
+      #       DDDD  ------- cigar
+    if rg_end < pos
+      new_pos = rg_start
+      new_cigar = "#{rg_end - rg_start +1}D"
+      return new_cigar, new_pos
+    end
+
+    
+   # caculate start-end of every type of in the cigar, then check the below 5 situations.
+    crs = drive_into_cigar(cigar, pos) # crs = [] of RG.new(start, end, type), type is MIDLSH=X
     
     #sitution2:
-      #        ---- region
-      #cigar ------ ****
-    
+      #              ---- region
+      #cigar ------  DDDD
+    if crs[-1].e < rg_start
+      new_pos = rg_start
+      new_cigar = "#{rg_end - rg_start +1}D"
+      return new_cigar, new_pos
+    end
+
     #sitution3:
-      #       ------ region
+      #          ------ region
       #          **
       #cigar ------ 
-
+    
     #sitution4:
       # region ------ 
       #           ***
       #           ------ cigar
-
-    #sitution5:
-      #       ------ region
-      #          ******
-      #cigar --------------
     
-    #sitution6:
+    #sitution5:
       #   -------------- region
       #      ********
       #cigar --------
     
+    #sitution6:
+      #         ---- region
+      #         ****
+      #cigar ------------
     
     raise "error: occur unexcept situation for read #{read_id} and ref #{ref_id}. when rg_start=#{rg_start},rg_end=#{rg_end} and position=#{pos},cigar=#{cigar}\n"  
     
@@ -199,8 +221,8 @@ class Bam2Msa < Admiral::Command
   end
 
   struct RG
-    property s, e
-    def initialize(@s : Int32|Int64, @e : Int32|Int64)
+    property s, e, v
+    def initialize(@s : Int32, @e : Int32, @v : String = "")
     end
   end
 
