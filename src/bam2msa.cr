@@ -13,14 +13,17 @@ class Bam2Msa < Admiral::Command
   define_flag primary_only : Int32,
     default: 1_i32,
     description: "only for primary alignment. 0 mean all alingment, 1 is only primary alignment"
-  define_help description: "convert bam to msa format"
+  define_flag display_softclip : Int32,
+    default: 1_i32,
+    description: "display softclip in the end of ref. 0 mean not display, 1 mean display"
+  define_help description: "convert bam to msa format for alignment file"
   define_version "0.0.1"
 
   COMPILE_TIME = Time.local
 
   def run
     if ARGV.size == 0
-      puts "Contact: ilikeorangeapple@gmail.com or go to https://github.com/orangeSi/grepfile/issues"
+      puts "Contact: ilikeorangeapple@gmail.com or go to https://github.com/orangeSi/bam2msa/issues"
       Bam2Msa.run "--help"
     end
     
