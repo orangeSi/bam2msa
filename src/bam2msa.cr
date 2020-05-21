@@ -47,8 +47,11 @@ class Bam2Msa < Admiral::Command
         arr = line.split(/\t/)
         rflag = arr[1].to_i32
         ref_id = arr[2]
+		
         next if rgs_key_size > 0 && ! rgs.has_key?(ref_id)
-        next if primary_only && (rflag & 256) != 0
+        next if primary_only && (rflag & 2304) > 0   #not primary alignment + supplementary alignment = 2304
+        next if (rflag & 4) > 0 # unmap = 4, filtered unmaped read
+
         query_id = arr[0]
         arr[0] = "_R_#{query_id}" if (rflag & 16) != 0 # reversed read map to ref
         #ref[arr[2]] # ref fasta
