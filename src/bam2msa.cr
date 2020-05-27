@@ -199,9 +199,10 @@ class Bam2Msa < Admiral::Command
 
   def cut_cigar_by_region(cigar : String, pos : Int32, rg_start : Int32, rg_end : Int32, read_id : String, ref_id : String)
     new_cigar = ""
-    new_pos = 0
+    new_pos = 1 # based 1, rg_start is also based 1
 
     # sitution1:
+    # ref --------------------
     # region ----
     #        DDDD  ------- cigar
     if rg_end < pos
@@ -214,6 +215,7 @@ class Bam2Msa < Admiral::Command
     crs = drive_into_cigar(cigar, pos) # crs = [] of RG.new(start, end, type), type is MIDLSH=X
 
     # sitution5:
+    # ------------------------ ref
     #   -------------- region
     #       ********
     # cigar --------
@@ -222,8 +224,9 @@ class Bam2Msa < Admiral::Command
     end
 
     # sitution2:
-    #              ---- region
-    # cigar ------  DDDD
+    #   -------------------------- ref
+    #               ---- region
+    # cigar ------  DDD, rg_start is also based 1D
     if crs[-1].e < rg_start
       new_pos = rg_start
       new_cigar = "#{rg_end - rg_start + 1}D"
@@ -231,14 +234,19 @@ class Bam2Msa < Admiral::Command
     end
 
     # sitution3:
+    #   ------------------------- ref
     #          ------ region
-    #          **
+    #          ***
     # cigar ------
     if rg_start >= crs[0].s && rg_start <= crs[-1].e
-      #
+      crs.each do |cr|
+        puts "#{cr}"
+      end
+      return new_cigar, new_pos
     end
 
     # sitution4:
+    # ref ----------------------
     # region ------
     #           ***
     #           ------ cigar
@@ -247,6 +255,7 @@ class Bam2Msa < Admiral::Command
     end
 
     # sitution6:
+    # -------------------- ref
     #         ---- region
     #         ****
     # cigar ------------
