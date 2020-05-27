@@ -79,6 +79,7 @@ class Bam2Msa < Admiral::Command
     end
 
     ref_msa = ""
+    raise "error: ref id #{ref_id} in the bam is not exists in the ref file\n" unless ref.has_key?(ref_id)
     ref_seq = ref[ref_id]
     ref_pos = -1 + pos
 
