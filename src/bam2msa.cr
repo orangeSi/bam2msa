@@ -14,7 +14,10 @@ class Bam2Msa < Admiral::Command
   define_flag primary_only : Int32,
     default: 1_i32,
     description: "only for primary alignment. 0 mean all alingment, 1 is only primary alignment"
-  define_flag display_softclip : Int32,
+  define_flag display_left_softclip : Int32,
+    default: 1_i32,
+    description: "display softclip in the start of ref. 0 mean not display, 1 mean display"
+  define_flag display_right_softclip : Int32,
     default: 1_i32,
     description: "display softclip in the end of ref. 0 mean not display, 1 mean display"
   define_help description: "convert bam to msa format for alignment file"
@@ -30,10 +33,10 @@ class Bam2Msa < Admiral::Command
 
     rgs = parser_regions(flags.regions)
     ref = read_fasta(arguments.ref, chrs: rgs.keys)
-    msa = convert_bam2msa(arguments.bam, ref, flags.primary_only, flags.regions)
+    msa = convert_bam2msa(arguments.bam, ref, flags.primary_only, flags.regions, display_left_softclip: flags.display_left_softclip, display_right_softclip: flags.display_right_softclip)
   end
 
-  def convert_bam2msa(bam : String, ref : Hash(String, String), primary_only : Int32, regions : String = "")
+  def convert_bam2msa(bam : String, ref : Hash(String, String), primary_only : Int32, regions : String = "", display_left_softclip : Int32 = 1, display_right_softclip : Int32 = 1)
     raise "error: cann't find samtools in $PATH" unless Process.find_executable("samtools")
     # title
     puts "#refid\tref_msa\tquery_id\tquery_msa\tconsensus_msa\tcigar\tflag"
@@ -46,13 +49,13 @@ class Bam2Msa < Admiral::Command
     Process.run("samtools view #{bam}", shell: true) do |proc|
       while line = proc.output.gets
         # to do: parallel this by channel.send(line)
-        msa = bam2msa_oneline(line,  primary_only, rgs_key_size, ref, rgs)
+        msa = bam2msa_oneline(line,  primary_only, rgs_key_size, ref, rgs, display_left_softclip: display_left_softclip, display_right_softclip: display_right_softclip)
         puts "#{msa.ref}\t#{msa.ref_msa}\t#{msa.query}\t#{msa.query_msa}\t#{msa.consensus}\t#{msa.cigar}\t#{msa.flag}" unless msa.is_a?(Nil)
       end
     end
   end
 
-  def bam2msa_oneline(line : String, primary_only : Int32, rgs_key_size : Int32, ref : Hash(String, String), rgs = {} of String => RG)
+  def bam2msa_oneline(line : String, primary_only : Int32, rgs_key_size : Int32, ref : Hash(String, String), rgs = {} of String => RG, display_left_softclip : Int32 = 1, display_right_softclip : Int32 = 1)
     arr = line.split(/\t/)
     rflag = arr[1].to_i32
     ref_id = arr[2]
@@ -72,6 +75,7 @@ class Bam2Msa < Admiral::Command
     # if specific --regions chr1:200-300 , then cut the cigar for --regions
     if rgs.has_key?(ref_id)
       cigar, pos = cut_cigar_by_region(cigar, pos, rgs[ref_id].s, rgs[ref_id].e, query_id, ref_id)
+      return nil if cigar == ""
     end
 
     ref_msa = ""
@@ -88,6 +92,18 @@ class Bam2Msa < Admiral::Command
       ref_msa = ref_seq[0...ref_pos]
       (0...ref_pos).each { |e| query_msa += "-" }
     end
+
+    # trim the softclip in the start/end  of ref
+    if display_left_softclip <= 0 && cigar =~ /^(\d+)S/
+        query_pos += $1.to_i32
+        cigar = cigar.sub(/^\d+S/, "")
+    end
+
+    if display_right_softclip <= 0 && cigar =~ /(\d+)S$/
+      cigar = cigar.sub(/\d+S$/, "") 
+    end
+
+
 
     # loop the cigar
     cigar.scan(/\d+[MIDNSHP=X]/).each do |e|
@@ -186,7 +202,7 @@ class Bam2Msa < Admiral::Command
 
     # sitution1:
     # region ----
-    #       DDDD  ------- cigar
+    #        DDDD  ------- cigar
     if rg_end < pos
       new_pos = rg_start
       new_cigar = "#{rg_end - rg_start + 1}D"
@@ -198,7 +214,7 @@ class Bam2Msa < Admiral::Command
 
     # sitution5:
     #   -------------- region
-    #      ********
+    #       ********
     # cigar --------
     if crs[0].s >= rg_start && crs[-1].e <= rg_end
       return cigar, pos
