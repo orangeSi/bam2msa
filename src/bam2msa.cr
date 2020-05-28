@@ -200,6 +200,62 @@ class Bam2Msa < Admiral::Command
   def cut_cigar_by_region(cigar : String, pos : Int32, rg_start : Int32, rg_end : Int32, read_id : String, ref_id : String)
     new_cigar = ""
     new_pos = 1 # based 1, rg_start is also based 1
+    
+    # caculate start-end of every type of in the cigar, then check the below 5 situations.
+    crs = drive_into_cigar(cigar, pos) # crs = [] of RG.new(start, end, type), type is MIDLSH=X
+    
+    # sitution6:
+    # -------------------- ref
+    #         ---- region
+    #         ****
+    # cigar ------------
+    if rg_start >= crs[0].s && rg_end <= crs[-1].e
+      crs.each do |cr|
+        puts "#{cr}"
+        if ctype == "M" || ctype == "=" || ctype == "X"
+
+          if rg_start >= cr.s  && rg_start <= cr.e
+            if rg_end > cr.e
+  	          ## ----- 5M
+    	        ##   -------- region
+              new_cigar += "#{cr.v - (rg_start - cr.s) }#{cr.t}"
+            else
+              ## -------- 5M
+              ##   ---- region
+              new_cigar += "#{cr.v - (rg_start - cr.s) - (cr.e - rg_end) }#{cr.t}"
+            end
+          elsif cr.s >= rg_start && cr.s <= rg_end
+            ##         ----- 5M
+            ##   -------- region
+
+            ##         ----- 5M
+            ##   ------------- region
+
+          else
+
+          end
+        elsif ctype == "I" || ctype == "S"
+          new_cigar += "#{cr.v}#{cr.t}"
+        elsif ctype == "D" || ctype == "N"
+          if cr.s <= rg_start && cr.e >= rg_start
+
+          end
+        end 
+      end
+      new_cigar = new_cigar.sub(/I$/, "S")
+      new_pos = rg_start
+      return new_cigar, new_pos
+    end
+
+    # sitution4:
+    # ref ----------------------
+    # region ------
+    #           ***
+    #           ------ cigar
+    if rg_start <= crs[0].s && rg_end >= crs[0].e
+      return "", 1
+    end
+
 
     # sitution1:
     # ref --------------------
@@ -211,8 +267,6 @@ class Bam2Msa < Admiral::Command
       return new_cigar, new_pos
     end
 
-    # caculate start-end of every type of in the cigar, then check the below 5 situations.
-    crs = drive_into_cigar(cigar, pos) # crs = [] of RG.new(start, end, type), type is MIDLSH=X
 
     # sitution5:
     # ------------------------ ref
@@ -239,10 +293,7 @@ class Bam2Msa < Admiral::Command
     #          ***
     # cigar ------
     if rg_start >= crs[0].s && rg_start <= crs[-1].e
-      crs.each do |cr|
-        puts "#{cr}"
-      end
-      return new_cigar, new_pos
+      return "", 1
     end
 
     # sitution4:
@@ -251,19 +302,22 @@ class Bam2Msa < Admiral::Command
     #           ***
     #           ------ cigar
     if rg_start <= crs[0].s && rg_end >= crs[0].e
-      #
+      return "", 1
     end
 
-    # sitution6:
-    # -------------------- ref
-    #         ---- region
-    #         ****
-    # cigar ------------
-    if rg_start >= crs[0].s && rg_end <= crs[-1].e
+
+    # sitution4:
+    # ref ----------------------
+    # region ------
+    #           ***
+    #           ------ cigar
+    if rg_start <= crs[0].s && rg_end >= crs[0].e
+      return "", 1
     end
 
     raise "error: occur unexcept situation for read #{read_id} and ref #{ref_id}. when rg_start=#{rg_start},rg_end=#{rg_end} and position=#{pos},cigar=#{cigar}\n"
   end
+
 
   def parser_regions(regions : String)
     # chr1:100-300,chr3:500-800
