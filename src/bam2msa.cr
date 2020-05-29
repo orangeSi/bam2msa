@@ -51,34 +51,7 @@ class Bam2Msa < Admiral::Command
         # to do: parallel this by channel.send(line)
         msa = bam2msa_oneline(line,  primary_only, rgs_key_size, ref, rgs, display_left_softclip: display_left_softclip, display_right_softclip: display_right_softclip)
         next if msa.is_a?(Nil)
-        
-        the_region = "1-#{ref[msa.ref].size}"
-			  ## cut msa by --regions
-	      if rgs.has_key?(msa.ref)
-          rgs_start = rgs[msa.ref].s
-          rgs_end = rgs[msa.ref].e
-          the_region = "#{rgs_start}-#{rgs_end}"
-          ref_msa_cut = ""
-          query_msa_cut = ""
-          consensus_cut = ""
-          #msa.cigar = "null"
-          index = 0
-
-          raise "error: ref #{msa.ref} total size #{ref[msa.ref].size}bp, but set #{rgs_end} in --regions \n" if rgs_end > ref[msa.ref].size
-
- 				  msa.ref_msa.each_char_with_index do |c,i|
-            if index >= (rgs_start-1) && index <= (rgs_end-1)
-              ref_msa_cut += c
-              query_msa_cut += msa.query_msa[i]
-              consensus_cut += msa.consensus[i]
-            end
-            index +=1 if c != '-'
-          end
-          msa.ref_msa = ref_msa_cut
-          msa.query_msa = query_msa_cut
-          msa.consensus = consensus_cut
-        end
-        puts "#{msa.ref}\t#{the_region}\t#{msa.ref_msa}\t#{msa.query}\t#{msa.query_msa}\t#{msa.consensus}\t#{msa.cigar}\t#{msa.flag}" 
+        puts "#{msa.ref}\t#{msa.ref_region}\t#{msa.ref_msa}\t#{msa.query}\t#{msa.query_msa}\t#{msa.consensus}\t#{msa.cigar}\t#{msa.flag}" 
       end
     end
   end
@@ -94,6 +67,7 @@ class Bam2Msa < Admiral::Command
 
     query_id = arr[0]
     arr[0] = "_R_#{query_id}" if (rflag & 16) != 0 # reversed read map to ref
+    
     # ref[arr[2]] # ref fasta
     # arr[9] # SEQ
     # arr[5] # cigar
@@ -208,7 +182,33 @@ class Bam2Msa < Admiral::Command
     end
 
     #property ref, ref_msa, query, query_msa, consensus, cigar, flag
-    return MSA.new(arr[2], ref_msa, arr[0], query_msa, consensus, cigar, rflag)
+
+    the_region = "1-#{ref[ref_id].size}"
+		## cut msa by --regions
+	   if rgs.has_key?(ref_id)
+          rgs_start = rgs[ref_id].s
+          rgs_end = rgs[ref_id].e
+          the_region = "#{rgs_start}-#{rgs_end}"
+          ref_msa_cut = ""
+          query_msa_cut = ""
+          consensus_cut = ""
+          index = 0
+
+          raise "error: ref #{ref_id} total size #{ref[ref_id].size}bp, but set #{rgs_end} in --regions \n" if rgs_end > ref[ref_id].size
+
+ 				  ref_msa.each_char_with_index do |c,i|
+            if index >= (rgs_start-1) && index <= (rgs_end-1)
+              ref_msa_cut += c
+              query_msa_cut += query_msa[i]
+              consensus_cut += consensus[i]
+            end
+            index +=1 if c != '-'
+          end
+          ref_msa = ref_msa_cut
+          query_msa = query_msa_cut
+          consensus = consensus_cut
+    end
+    return MSA.new(ref_id, the_region, ref_msa, arr[0], query_msa, consensus, cigar, rflag)
     #puts "#{arr[2]}\t#{ref_msa}\t#{arr[0]}\t#{query_msa}\t#{consensus}\t#{cigar}\t#{arr[1]}"
   end
   
@@ -400,8 +400,8 @@ class Bam2Msa < Admiral::Command
   end
 
   struct MSA
-    property ref, ref_msa, query, query_msa, consensus, cigar, flag
-    def initialize(@ref : String, @ref_msa : String, @query : String, @query_msa : String, @consensus : String, @cigar : String, @flag : Int32)
+    property ref, ref_region, ref_msa, query, query_msa, consensus, cigar, flag
+    def initialize(@ref : String, @ref_region : String, @ref_msa : String, @query : String, @query_msa : String, @consensus : String, @cigar : String, @flag : Int32)
     end
   end
   
