@@ -39,7 +39,7 @@ class Bam2Msa < Admiral::Command
   def convert_bam2msa(bam : String, ref : Hash(String, String), primary_only : Int32, regions : String = "", display_left_softclip : Int32 = 1, display_right_softclip : Int32 = 1)
     raise "error: cann't find samtools in $PATH" unless Process.find_executable("samtools")
     # title
-    puts "#refid\tref_cut_region\tref_msa\tquery_id\tquery_msa\tconsensus_msa\tcigar\tflag"
+    puts "#refid\tref_cut_region\tref_msa\tquery_id\tquery_msa\tconsensus_msa\traw_cigar\tflag"
 
     # get regions of output
     rgs = parser_regions(regions)

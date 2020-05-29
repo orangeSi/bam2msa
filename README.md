@@ -2,6 +2,22 @@
 convert alignment file bam to multiple sequence alignment(msa)
 
 ```
+$cd test/
+$./bam2msa ref.fa out.bwa.bam --regions NC_045512.2_1bp_to_1680bp:1-10 --display-left-softclip 0 |cut -f 1-6|c1
+1                          2               3           4          5           6
+#refid                     ref_cut_region  ref_msa     query_id   query_msa   consensus_msa
+NC_045512.2_1bp_to_1680bp  1-10            ATTAAAGGTT  clone1     ATTAAAGGTT  ==========
+NC_045512.2_1bp_to_1680bp  1-10            ATTAAAGGTT  _R_clone2  ----------  DDDDDDDDDD
+
+$./bam2msa ref.fa out.bwa.bam --regions NC_045512.2_1bp_to_1680bp:3-10 --display-left-softclip 0 |cut -f 1-6|c1
+1                          2               3         4          5          6
+#refid                     ref_cut_region  ref_msa   query_id   query_msa  consensus_msa
+NC_045512.2_1bp_to_1680bp  3-10            TAAAGGTT  clone1     TAAAGGTT   ========
+NC_045512.2_1bp_to_1680bp  3-10            TAAAGGTT  _R_clone2  --------   DDDDDDDD
+```
+
+
+```
 $./src/bam2msa
 Contact: ilikeorangeapple@gmail.com or go to https://github.com/orangeSi/grepfile/issues
 Usage:
