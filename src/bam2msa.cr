@@ -53,8 +53,8 @@ class Bam2Msa < Admiral::Command
         next if msa.is_a?(Nil)
         
         the_region = "1-#{ref[msa.ref].size}"
-			  ## cut msa by --regions
-	      if rgs.has_key?(msa.ref)
+        ## cut msa by --regions
+        if rgs.has_key?(msa.ref)
           rgs_start = rgs[msa.ref].s
           rgs_end = rgs[msa.ref].e
           the_region = "#{rgs_start}-#{rgs_end}"
@@ -66,7 +66,7 @@ class Bam2Msa < Admiral::Command
 
           raise "error: ref #{msa.ref} total size #{ref[msa.ref].size}bp, but set #{rgs_end} in --regions \n" if rgs_end > ref[msa.ref].size
 
- 				  msa.ref_msa.each_char_with_index do |c,i|
+          msa.ref_msa.each_char_with_index do |c,i|
             if index >= (rgs_start-1) && index <= (rgs_end-1)
               ref_msa_cut += c
               query_msa_cut += msa.query_msa[i]
