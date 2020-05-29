@@ -51,7 +51,38 @@ class Bam2Msa < Admiral::Command
         # to do: parallel this by channel.send(line)
         msa = bam2msa_oneline(line,  primary_only, rgs_key_size, ref, rgs, display_left_softclip: display_left_softclip, display_right_softclip: display_right_softclip)
         next if msa.is_a?(Nil)
+<<<<<<< HEAD
         puts "#{msa.ref}\t#{msa.ref_region}\t#{msa.ref_msa}\t#{msa.query}\t#{msa.query_msa}\t#{msa.consensus}\t#{msa.cigar}\t#{msa.flag}" 
+=======
+        
+        the_region = "1-#{ref[msa.ref].size}"
+        ## cut msa by --regions
+        if rgs.has_key?(msa.ref)
+          rgs_start = rgs[msa.ref].s
+          rgs_end = rgs[msa.ref].e
+          the_region = "#{rgs_start}-#{rgs_end}"
+          ref_msa_cut = ""
+          query_msa_cut = ""
+          consensus_cut = ""
+          #msa.cigar = "null"
+          index = 0
+
+          raise "error: ref #{msa.ref} total size #{ref[msa.ref].size}bp, but set #{rgs_end} in --regions \n" if rgs_end > ref[msa.ref].size
+
+          msa.ref_msa.each_char_with_index do |c,i|
+            if index >= (rgs_start-1) && index <= (rgs_end-1)
+              ref_msa_cut += c
+              query_msa_cut += msa.query_msa[i]
+              consensus_cut += msa.consensus[i]
+            end
+            index +=1 if c != '-'
+          end
+          msa.ref_msa = ref_msa_cut
+          msa.query_msa = query_msa_cut
+          msa.consensus = consensus_cut
+        end
+        puts "#{msa.ref}\t#{the_region}\t#{msa.ref_msa}\t#{msa.query}\t#{msa.query_msa}\t#{msa.consensus}\t#{msa.cigar}\t#{msa.flag}" 
+>>>>>>> f930fb6f7f6be61e87f05d2fc371facf92692b0f
       end
     end
   end
