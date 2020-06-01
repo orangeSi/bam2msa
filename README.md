@@ -19,7 +19,7 @@ NC_045512.2_1bp_to_1680bp  3-10            TAAAGGTT  _R_clone2  --------   DDDDD
 
 ```
 $ ./src/bam2msa
-Contact: ilikeorangeapple@gmail.com or go to https://github.com/orangeSi/bam2msa/issues
+Contact: https://github.com/orangeSi/bam2msa/issues
 Usage:
   ./src/bam2msa [flags...] <ref> <bam> [arg...]
 
