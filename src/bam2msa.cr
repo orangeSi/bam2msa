@@ -44,15 +44,29 @@ class Bam2Msa < Admiral::Command
     # get regions of output
     rgs = parser_regions(regions)
     rgs_key_size = rgs.keys.size
-
-    # read the bam
-    Process.run("samtools view #{bam}", shell: true) do |proc|
-      while line = proc.output.gets
-        # to do: parallel this by channel.send(line)
-        msa = bam2msa_oneline(line,  primary_only, rgs_key_size, ref, rgs, display_left_softclip: display_left_softclip, display_right_softclip: display_right_softclip)
-        next if msa.is_a?(Nil)
-        puts "#{msa.ref}\t#{msa.ref_region}\t#{msa.ref_msa}\t#{msa.query}\t#{msa.query_msa}\t#{msa.consensus}\t#{msa.cigar}\t#{msa.flag}" 
+		
+		if bam.ends_with?("bam")
+      # read the bam
+      Process.run("samtools view #{bam}", shell: true) do |proc|
+        while line = proc.output.gets
+          # to do: parallel this by channel.send(line)
+		      next if line.starts_with?("@") # skip header of bam file
+          msa = bam2msa_oneline(line,  primary_only, rgs_key_size, ref, rgs, display_left_softclip: display_left_softclip, display_right_softclip: display_right_softclip)
+          next if msa.is_a?(Nil)
+          puts "#{msa.ref}\t#{msa.ref_region}\t#{msa.ref_msa}\t#{msa.query}\t#{msa.query_msa}\t#{msa.consensus}\t#{msa.cigar}\t#{msa.flag}" 
+        end
       end
+    elsif bam.ends_with?("sam")
+      # read the sam
+      File.each_line(bam) do |line|
+          # to do: parallel this by channel.send(line)
+		      next if line.starts_with?("@") # skip header of bam file
+          msa = bam2msa_oneline(line,  primary_only, rgs_key_size, ref, rgs, display_left_softclip: display_left_softclip, display_right_softclip: display_right_softclip)
+          next if msa.is_a?(Nil)
+          puts "#{msa.ref}\t#{msa.ref_region}\t#{msa.ref_msa}\t#{msa.query}\t#{msa.query_msa}\t#{msa.consensus}\t#{msa.cigar}\t#{msa.flag}" 
+      end
+    else
+			raise("error:  only support *.bam or *.sam file, not #{bam}")
     end
   end
 
