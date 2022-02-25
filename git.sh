@@ -13,7 +13,7 @@ fi
 set -vex
 git add $add
 git commit -m "$commit"
-git push -u origin master
+git push  origin master
 
 echo done
 exit
