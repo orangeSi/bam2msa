@@ -44,44 +44,35 @@ class Bam2Msa < Admiral::Command
     # get regions of output
     rgs = parser_regions(regions)
     rgs_key_size = rgs.keys.size
-		
-		if bam.ends_with?("bam")
-      # read the bam
-      Process.run("samtools view #{bam}", shell: true) do |proc|
-        while line = proc.output.gets
-          # to do: parallel this by channel.send(line)
-		      next if line.starts_with?("@") # skip header of bam file
-          msa = bam2msa_oneline(line,  primary_only, rgs_key_size, ref, rgs, display_left_softclip: display_left_softclip, display_right_softclip: display_right_softclip)
-          next if msa.is_a?(Nil)
-          puts "#{msa.ref}\t#{msa.ref_region}\t#{msa.ref_msa}\t#{msa.query}\t#{msa.query_msa}\t#{msa.consensus}\t#{msa.cigar}\t#{msa.flag}" 
-        end
+
+    # read the bam
+    # # check bam.bai file if exists!
+    if File.exists?("#{bam}.bai") == false
+      raise("error: #{bam}.bai not exists, so need samootls index #{bam} before!")
+    end
+    Process.run("samtools view #{bam} #{flags.regions}", shell: true) do |proc|
+      while line = proc.output.gets
+        # to do: parallel this by channel.send(line)
+        msa = bam2msa_oneline(line, primary_only, rgs_key_size, ref, rgs, display_left_softclip: display_left_softclip, display_right_softclip: display_right_softclip)
+        next if msa.is_a?(Nil)
+        puts "#{msa.ref}\t#{msa.ref_region}\t#{msa.ref_msa}\t#{msa.query}\t#{msa.query_msa}\t#{msa.consensus}\t#{msa.cigar}\t#{msa.flag}"
       end
-    elsif bam.ends_with?("sam")
-      # read the sam
-      File.each_line(bam) do |line|
-          # to do: parallel this by channel.send(line)
-		      next if line.starts_with?("@") # skip header of bam file
-          msa = bam2msa_oneline(line,  primary_only, rgs_key_size, ref, rgs, display_left_softclip: display_left_softclip, display_right_softclip: display_right_softclip)
-          next if msa.is_a?(Nil)
-          puts "#{msa.ref}\t#{msa.ref_region}\t#{msa.ref_msa}\t#{msa.query}\t#{msa.query_msa}\t#{msa.consensus}\t#{msa.cigar}\t#{msa.flag}" 
-      end
-    else
-			raise("error:  only support *.bam or *.sam file, not #{bam}")
     end
   end
 
   def bam2msa_oneline(line : String, primary_only : Int32, rgs_key_size : Int32, ref : Hash(String, String), rgs = {} of String => RG, display_left_softclip : Int32 = 1, display_right_softclip : Int32 = 1)
+    # puts "read line: #{line}"
     arr = line.split(/\t/)
     rflag = arr[1].to_i32
     ref_id = arr[2]
-  
+
     return nil if rgs_key_size > 0 && !rgs.has_key?(ref_id) # skip alignemtn which ref is not in regions
-    return nil if primary_only && (rflag & 2304) > 0 # not primary alignment + supplementary alignment = 2304
-    return nil if (rflag & 4) > 0                    # unmap = 4, filtered unmaped read
+    return nil if primary_only && (rflag & 2304) > 0        # not primary alignment + supplementary alignment = 2304
+    return nil if (rflag & 4) > 0                           # unmap = 4, filtered unmaped read
 
     query_id = arr[0]
     arr[0] = "_R_#{query_id}" if (rflag & 16) != 0 # reversed read map to ref
-    
+
     # ref[arr[2]] # ref fasta
     # arr[9] # SEQ
     # arr[5] # cigar
@@ -89,15 +80,14 @@ class Bam2Msa < Admiral::Command
     cigar = arr[5]
 
     # todo:if specific --regions chr1:200-300 , then cut the cigar for --regions
-    #if rgs.has_key?(ref_id)
-      #puts "raw_cigar=#{cigar} to #{ref_id}"
-      #cigar, pos = cut_cigar_by_region(cigar, pos, rgs[ref_id].s, rgs[ref_id].e, query_id, ref_id)
-      #return nil if cigar == ""
-      #puts "new_cigar=#{cigar} to #{ref_id}" #sikaiwei
-      # check the cigar form
-      #raise "error:get wrong cigar=#{cigar} for #{query_id} #{ref_id}\n" if cigar =~ /[^\d^M^I^D^N^S^H^P^=^X]/
-    #end
-    
+    # if rgs.has_key?(ref_id)
+    # puts "raw_cigar=#{cigar} to #{ref_id}"
+    # cigar, pos = cut_cigar_by_region(cigar, pos, rgs[ref_id].s, rgs[ref_id].e, query_id, ref_id)
+    # return nil if cigar == ""
+    # puts "new_cigar=#{cigar} to #{ref_id}" #sikaiwei
+    # check the cigar form
+    # raise "error:get wrong cigar=#{cigar} for #{query_id} #{ref_id}\n" if cigar =~ /[^\d^M^I^D^N^S^H^P^=^X]/
+    # end
 
     ref_msa = ""
     raise "error: ref id #{ref_id} in the bam is not exists in the ref file\n" unless ref.has_key?(ref_id)
@@ -110,26 +100,25 @@ class Bam2Msa < Admiral::Command
 
     # ---------- ref
     #    -------- query, the below code is for this
-    if ref_pos >= 1
-      ref_msa = ref_seq[0...ref_pos]
-      #(0...ref_pos).each { |e| query_msa += "-" }
-      query_msa += "-"*ref_pos
-    end
+    #if ref_pos >= 1
+    #  ref_msa = ref_seq[0...ref_pos]
+    #  # (0...ref_pos).each { |e| query_msa += "-" }
+    #  query_msa += "-"*ref_pos
+    #end
 
     # trim the softclip in the start/end  of ref
     if display_left_softclip <= 0 && cigar =~ /^(\d+)S/
-        query_pos += $1.to_i32
-        cigar = cigar.sub(/^\d+S/, "")
+      query_pos += $1.to_i32
+      cigar = cigar.sub(/^\d+S/, "")
     end
 
     if display_right_softclip <= 0 && cigar =~ /(\d+)S$/
-      cigar = cigar.sub(/\d+S$/, "") 
+      cigar = cigar.sub(/\d+S$/, "")
     end
-   
-    
 
     # loop the cigar
     cigar.scan(/\d+[MIDNSHP=X]/).each do |e|
+      # puts "e=#{e}"
       if e[0] =~ /(\d+)(.)/
         clen = $1.to_i32
         ctype = $2 # MIDNSHP=X, reference to http://samtools.github.io/hts-specs/SAMv1.pdf
@@ -140,26 +129,24 @@ class Bam2Msa < Admiral::Command
           query_msa += query_seq[query_pos...query_pos + clen]
           query_pos += clen
         elsif ctype == "I" || ctype == "S"
-          #(0...clen).each { |e| ref_msa += "-" } # add - to ref
-          ref_msa  += "-"*clen
+          # (0...clen).each { |e| ref_msa += "-" } # add - to ref
+          ref_msa += "-"*clen
           query_msa += query_seq[query_pos...query_pos + clen]
           query_pos += clen
         elsif ctype == "D" || ctype == "N"
           ref_msa += ref_seq[ref_pos...ref_pos + clen]
           ref_pos += clen
-          #(0...clen).each { |e| query_msa += "-" } # add - to query
-          query_msa +=  "-"*clen
+          # (0...clen).each { |e| query_msa += "-" } # add - to query
+          query_msa += "-"*clen
+        else
+          raise("error: not recoginize cigar #{e}")
         end
       end
     end
 
     # --------- query
     #  ------------ ref
-    if ref_seq.size > ref_pos
-      ref_msa += ref_seq[ref_pos..]
-      #(ref_pos...ref_seq.size).each { |e| query_msa += "-" }
-      query_msa += "-"*(ref_seq.size-ref_pos)
-    elsif ref_seq.size < ref_pos
+    if ref_seq.size < ref_pos
       raise("error: ref_seq.size #{ref_seq.size} <  ref_pos #{ref_pos}")
     end
 
@@ -167,65 +154,71 @@ class Bam2Msa < Admiral::Command
       raise("error: size not equal for #{arr[0]} and cigar=#{cigar}. #{query_msa.size} != #{ref_msa.size}")
     end
 
-    raise "error: ref_seq #{arr[2]} not equal, cigar=#{cigar}, ref_msa=#{ref_msa}\n" if ref_msa.gsub(/-/, "") != ref_seq
+    #raise "error: ref_seq #{arr[2]} not equal, cigar=#{cigar}, ref_msa=#{ref_msa}\n" if ref_msa.gsub(/-/, "") != ref_seq
 
-    # get consensue sequence
+    the_region = "1-#{ref[ref_id].size}"
+    # # cut msa by --regions
+    # puts "cut msa by --regions"
     consensus = ""
-    query_msa.split(//).zip(ref_msa.split(//)) do |qe, re|
-      if qe == re
-        if qe != "-" # match
-          consensus += "="
-        else
-          raise "error: get both - for query=#{query_id} and ref=#{ref_id} for cigar=#{cigar}\n"
+    if rgs.has_key?(ref_id)
+      rgs_start = rgs[ref_id].s
+      rgs_end = rgs[ref_id].e
+      the_region = "#{rgs_start}-#{rgs_end}"
+      ref_msa_cut = ""
+      query_msa_cut = ""
+      index = pos -1
+
+      raise "error: ref #{ref_id} total size #{ref[ref_id].size}bp, but set #{rgs_end} in --regions \n" if rgs_end > ref[ref_id].size
+      #puts "query_msa=#{query_msa}"
+      #puts "ref_msa=  #{ref_msa}"
+      #puts "index=#{index} rgs_start=#{rgs_start} rgs_end=#{rgs_end}"
+
+       
+      ref_msa.each_char_with_index do |c, i|
+        if index >= (rgs_start - 1) && index <= (rgs_end - 1)
+          ref_msa_cut += c
+          query_msa_cut += query_msa[i]
         end
-      else
-        if qe != "-" && re != "-" # mismatch
-          consensus += "X"
-        else           # indel
-          if qe == "-" # deletion
-            consensus += "D"
-          else # insertion
-            consensus += "I"
+        index += 1 if c != '-'
+      end
+      ref_msa = ref_msa_cut
+      query_msa = query_msa_cut
+      # get consensue sequence
+      # puts "get consens"
+      #puts "query_msa=#{query_msa}"
+      #puts "ref_msa=  #{ref_msa}\n"
+      query_msa.split(//).zip(ref_msa.split(//)) do |qe, re|
+        next if qe == ""
+
+        if qe == re
+          if qe != "-" # match
+            consensus += "="
+          else
+            raise "error: get both - for query=#{query_id} and ref=#{ref_id} for cigar=#{cigar}\n"
+          end
+        else
+          if qe != "-" && re != "-" # mismatch
+            consensus += "X"
+          else           # indel
+            if qe == "-" # deletion
+              consensus += "D"
+            else # insertion
+              consensus += "I"
+            end
           end
         end
       end
+      # puts "get consus done"
+
+      if query_msa.size != consensus.size
+        raise("error: consensus and query_msa size not equal for #{arr[0]} and #{cigar}. #{query_msa.size} != #{consensus.size}, consensus=#{consensus}, query_msa=#{query_msa}, ref_msa=#{ref_msa}")
+      end
     end
-
-    if query_msa.size != consensus.size
-      raise("error: consensus and query_msa size not equal for #{arr[0]} and #{cigar}. #{query_msa.size} != #{consensus.size}, consensus=#{consensus}")
-    end
-
-    #property ref, ref_msa, query, query_msa, consensus, cigar, flag
-
-    the_region = "1-#{ref[ref_id].size}"
-		## cut msa by --regions
-	   if rgs.has_key?(ref_id)
-          rgs_start = rgs[ref_id].s
-          rgs_end = rgs[ref_id].e
-          the_region = "#{rgs_start}-#{rgs_end}"
-          ref_msa_cut = ""
-          query_msa_cut = ""
-          consensus_cut = ""
-          index = 0
-
-          raise "error: ref #{ref_id} total size #{ref[ref_id].size}bp, but set #{rgs_end} in --regions \n" if rgs_end > ref[ref_id].size
-
- 				  ref_msa.each_char_with_index do |c,i|
-            if index >= (rgs_start-1) && index <= (rgs_end-1)
-              ref_msa_cut += c
-              query_msa_cut += query_msa[i]
-              consensus_cut += consensus[i]
-            end
-            index +=1 if c != '-'
-          end
-          ref_msa = ref_msa_cut
-          query_msa = query_msa_cut
-          consensus = consensus_cut
-    end
+    # puts "read line done"
     return MSA.new(ref_id, the_region, ref_msa, arr[0], query_msa, consensus, cigar, rflag)
-    #puts "#{arr[2]}\t#{ref_msa}\t#{arr[0]}\t#{query_msa}\t#{consensus}\t#{cigar}\t#{arr[1]}"
+    # puts "#{arr[2]}\t#{ref_msa}\t#{arr[0]}\t#{query_msa}\t#{consensus}\t#{cigar}\t#{arr[1]}"
   end
-  
+
   def drive_into_cigar(cigar, pos) # caculate start-end of every type of in the cigar
     crs = [] of RG
     ref_pos = pos
@@ -244,17 +237,17 @@ class Bam2Msa < Admiral::Command
         ref_pos += clen
       end
     end
-    #puts "cigars=#{cigar}, crs=#{crs}"
+    # puts "cigars=#{cigar}, crs=#{crs}"
     return crs
   end
 
   def cut_cigar_by_region(cigar : String, pos : Int32, rg_start : Int32, rg_end : Int32, read_id : String, ref_id : String)
     new_cigar = ""
     new_pos = 1 # based 1, rg_start is also based 1
-    
+
     # caculate start-end of every type of in the cigar, then check the below 5 situations.
     crs = drive_into_cigar(cigar, pos) # crs = [] of RG.new(start, end, type), type is MIDLSH=X
-    
+
     # sitution6:
     # -------------------- ref
     #         ---- region
@@ -262,52 +255,51 @@ class Bam2Msa < Admiral::Command
     # cigar ------------
     if rg_start >= crs[0].s && rg_end <= crs[-1].e
       crs.each do |cr|
-        #puts "#{cr.s}-#{cr.e} -> #{cr.v}#{cr.t}, rg_start=#{rg_start}, rg_end=#{rg_end}"
+        # puts "#{cr.s}-#{cr.e} -> #{cr.v}#{cr.t}, rg_start=#{rg_start}, rg_end=#{rg_end}"
         if cr.t == "M" || cr.t == "=" || cr.t == "X" || cr.t == "D" || cr.t == "N"
-          if rg_start >= cr.s  && rg_start <= cr.e
-            #puts "1"
+          if rg_start >= cr.s && rg_start <= cr.e
+            # puts "1"
             if rg_end > cr.e
-            #puts "11"
-  	          ## ----- 5M
-    	        ##   -------- region
-              new_cigar += "#{cr.v - (rg_start - cr.s) }#{cr.t}"
+              # puts "11"
+              # # ----- 5M
+              # #   -------- region
+              new_cigar += "#{cr.v - (rg_start - cr.s)}#{cr.t}"
             else
-            #puts "12"
-              ## -------- 5M
-              ##   ---- region
-              new_cigar += "#{cr.v - (rg_start - cr.s) - (cr.e - rg_end) }#{cr.t}"
+              # puts "12"
+              # # -------- 5M
+              # #   ---- region
+              new_cigar += "#{cr.v - (rg_start - cr.s) - (cr.e - rg_end)}#{cr.t}"
               break
             end
           elsif cr.s >= rg_start && cr.s <= rg_end
             if cr.e > rg_end
-            ##         ----- 5M
-            ##   -------- region
-              new_cigar += "#{cr.v - (cr.e - rg_end) }#{cr.t}"
+              # #         ----- 5M
+              # #   -------- region
+              new_cigar += "#{cr.v - (cr.e - rg_end)}#{cr.t}"
               break
             else
-            ##         ----- 5M
-            ##   ------------- region
+              # #         ----- 5M
+              # #   ------------- region
               new_cigar += "#{cr.v}#{cr.t}"
             end
-
-          elsif  cr.e < rg_start
-           ## ----- 5M
-           ##            ------- region
-              next
+          elsif cr.e < rg_start
+            # # ----- 5M
+            # #            ------- region
+            next
           elsif cr.s > rg_end
-            ##                  ----- 5M
-            ##  ------- region
+            # #                  ----- 5M
+            # #  ------- region
             next
           else
-					  raise "error: this a bug, please issue to me~ read=#{read_id}, cigar=#{cigar}"
+            raise "error: this a bug, please issue to me~ read=#{read_id}, cigar=#{cigar}"
           end
         elsif cr.t == "I" || cr.t == "S"
           if rg_start <= cr.e
             new_cigar += "#{cr.v}#{cr.t}"
           end
         else
-           raise("error: not recognize cigar #{cigar}")
-        end 
+          raise("error: not recognize cigar #{cigar}")
+        end
       end
       new_cigar = new_cigar.sub(/I$/, "S")
       new_pos = rg_start
@@ -323,7 +315,6 @@ class Bam2Msa < Admiral::Command
       return "", 1
     end
 
-
     # sitution1:
     # ref --------------------
     # region ----
@@ -333,7 +324,6 @@ class Bam2Msa < Admiral::Command
       new_cigar = "#{rg_end - rg_start + 1}D"
       return new_cigar, new_pos
     end
-
 
     # sitution5:
     # ------------------------ ref
@@ -372,7 +362,6 @@ class Bam2Msa < Admiral::Command
       return "", 1
     end
 
-
     # sitution4:
     # ref ----------------------
     # region ------
@@ -384,7 +373,6 @@ class Bam2Msa < Admiral::Command
 
     raise "error: occur unexcept situation for read #{read_id} and ref #{ref_id}. when rg_start=#{rg_start},rg_end=#{rg_end} and position=#{pos},cigar=#{cigar}\n"
   end
-
 
   def parser_regions(regions : String)
     # chr1:100-300,chr3:500-800
@@ -403,6 +391,7 @@ class Bam2Msa < Admiral::Command
         raise "error: not support region #{e}, example: chr1:100-300\n"
       end
     end
+    #puts "rgs=#{rgs}"
     return rgs
   end
 
@@ -415,10 +404,10 @@ class Bam2Msa < Admiral::Command
 
   struct MSA
     property ref, ref_region, ref_msa, query, query_msa, consensus, cigar, flag
+
     def initialize(@ref : String, @ref_region : String, @ref_msa : String, @query : String, @query_msa : String, @consensus : String, @cigar : String, @flag : Int32)
     end
   end
-  
 end
 
 Bam2Msa.run
