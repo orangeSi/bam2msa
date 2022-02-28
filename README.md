@@ -3,55 +3,52 @@ convert alignment bam/sam file to multiple sequence alignment(msa) file
 
 ```
 $ cd test/
-$ ./bam2msa ref.fa out.bwa.bam --regions NC_045512.2_1bp_to_1680bp:1-10 --display-left-softclip 0 |cut -f 1-6|c1
-1                          2               3           4          5           6
-#refid                     ref_cut_region  ref_msa     query_id   query_msa   consensus_msa
-NC_045512.2_1bp_to_1680bp  1-10            ATTAAAGGTT  clone1     ATTAAAGGTT  ==========
-NC_045512.2_1bp_to_1680bp  1-10            ATTAAAGGTT  _R_clone2  ----------  DDDDDDDDDD
 
-$ ./bam2msa ref.fa out.bwa.bam --regions NC_045512.2_1bp_to_1680bp:3-10 --display-left-softclip 0 |cut -f 1-6|c1
-1                          2               3         4          5          6
-#refid                     ref_cut_region  ref_msa   query_id   query_msa  consensus_msa
-NC_045512.2_1bp_to_1680bp  3-10            TAAAGGTT  clone1     TAAAGGTT   ========
-NC_045512.2_1bp_to_1680bp  3-10            TAAAGGTT  _R_clone2  --------   DDDDDDDD
+$ ./bam2msa ref.fa out.bwa.bam NC_045512.2_1bp_to_1680bp:1-20|cut -f 1-7|c1
+1                     2                     3                     4                               5         6     7
+#query_msa            ref_msa               consensus_msa         ref_cut_region                  query_id  FLAG  POS_in_Bam
+ATTAAAGGTTTATACC--CC  ATTAAAGGTTTATACCTTCC  ================DD==  NC_045512.2_1bp_to_1680bp:1-20  clone1    0     1
+
 ```
 
 
 ```
-$ ./src/bam2msa
-Contact: https://github.com/orangeSi/bam2msa/issues
+$ ../src/bam2msa
 Usage:
-  ./src/bam2msa [flags...] <ref> <bam> [arg...]
+  ./bam2msa [flags...] <ref> <bam> <regions> [arg...]
 
 convert bam to msa format for alignment file
 
 Flags:
-  --display-left-softclip (default: 1)   # display softclip in the start of ref. 0 mean not display, 1 mean display
-  --display-right-softclip (default: 1)  # display softclip in the end of ref. 0 mean not display, 1 mean display
-  --help                                 # Displays help for the current command.
-  --primary-only (default: 1)            # only for primary alignment. 0 mean all alingment, 1 is only primary alignment
-  --regions (default: "")                # default display the msa of whole ref for every read. If not, set the specific regsion, ex: chr1:1000-3000
-  --version                              # Displays the version of the current application.
+  --help                                      # Displays help for the current command.
+  --primary-only (default: 1)                 # only for primary alignment. 0 mean all alingment, 1 is only primary alignment
+  --span-whole-region-read-only (default: 1)  # only for read which span the whole region. 0 mean all read which overlap with the region, 1 mean is read which span the whole region
+  --version                                   # Displays the version of the current application.
 
 Arguments:
-  ref (required)                         # ref fasta file
-  bam (required)                         # bam alignemnt file
+  ref (required)                              # ref fasta file
+  bam (required)                              # bam alignemnt file
+  regions (required)                          # display read and ref msa alignment in these regions, example: chr1:1000-1200,chr2:2000-2300
 
 ```
 
 ```
 $ cd test && cat demo.sh 
-set -vex
-./bam2msa ref.fa out.bwa.bam >out.bam2msa
-cat out.bam2msa |grep -v '^#'|awk '{print ">"$1"\n"$2"\n>"$3"\n"$4}' >out.bam2msa.msa
+set -e
+./bam2msa ref.fa out.bwa.bam NC_045512.2_1bp_to_1680bp:1-1680 --span-whole-region-read-only 0 >out.bam2msa
+cat out.bam2msa |grep -v '^#'|awk -F '\t' '{print ">"$4"\n"$2"\n>"$5"\n"$1}'|sed 's/:.*//' >out.bam2msa.msa
 
 ln -sf  out.bam2msa.msa case
 ln -sf  ../data/out.mafft.msa control
 diff control case
-echo done
+if [ $? -eq 0 ];
+then
+	echo "ok, test passed!"
+else
+	echo "sorry, test failed! give a issue to me please~~~"
+fi
 
 $ sh demo.sh
 ok, test passed!
-
 
 ```

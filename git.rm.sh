@@ -8,7 +8,7 @@ files=$2
 commit=$1
 git rm -r --cached $files
 git commit -m "$commit"
-git push -u origin master
+git push  origin master
 
 exit
 
