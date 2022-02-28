@@ -17,6 +17,9 @@ class Bam2Msa < Admiral::Command
   define_flag span_whole_region_read_only : Int32,
     default: 1_i32,
     description: "only for read which span the whole region. 0 mean all read which overlap with the region, 1 mean is read which span the whole region"
+  define_flag measure_run_time : Int32,
+    default: 0_i32,
+    description: "measure the run time of code"
   define_help description: "convert bam to msa format for alignment file"
   define_version "0.0.2"
 
@@ -29,17 +32,25 @@ class Bam2Msa < Admiral::Command
     end
 
     rgs = parser_regions(arguments.regions)
-    #t0 = Time.utc
-    ref = read_fasta(arguments.ref, chrs: rgs.keys)
-    #t1 = Time.utc
-    #puts "read_fasta cost #{t1-t0}s"
-    #puts "flags.span_whole_region_read_only #{flags.span_whole_region_read_only}"
-    #t2 = Time.utc
-    arguments.regions.split(",").each do |rg|
-      convert_bam2msa(arguments.bam, ref, flags.primary_only, rg, flags.span_whole_region_read_only)
+    if flags.measure_run_time >=1
+      t0 = Time.utc
+      ref = read_fasta(arguments.ref, chrs: rgs.keys)
+      t1 = Time.utc
+      puts "## read_fasta cost #{t1-t0}s"
+
+      #puts "flags.span_whole_region_read_only #{flags.span_whole_region_read_only}"
+      t2 = Time.utc
+      arguments.regions.split(",").each do |rg|
+        convert_bam2msa(arguments.bam, ref, flags.primary_only, rg, flags.span_whole_region_read_only)
+      end
+      t3 = Time.utc
+      puts "## convert_bam2msa cost #{t3-t2}s"
+    else
+      ref = read_fasta(arguments.ref, chrs: rgs.keys)
+      arguments.regions.split(",").each do |rg|
+        convert_bam2msa(arguments.bam, ref, flags.primary_only, rg, flags.span_whole_region_read_only)
+      end
     end
-    #t3 = Time.utc
-    #puts "convert_bam2msa cost #{t3-t2}s"
   end
 
   def convert_bam2msa(bam : String, ref : Hash(String, String), primary_only : Int32, region : String, span_whole_region_read_only : Int32)
@@ -213,7 +224,8 @@ class Bam2Msa < Admiral::Command
     # puts "get consens"
     # puts "query_msa=#{query_msa}"
     # puts "ref_msa=  #{ref_msa}\n"
-    query_msa.split(//).zip(ref_msa.split(//)) do |qe, re|
+    #query_msa.split(//).zip(ref_msa.split(//)) do |qe, re|
+    query_msa.each_char.zip(ref_msa.each_char) do |qe, re|
       next if qe == ""
       if qe == re
         if qe != "-" # match
