@@ -1,5 +1,5 @@
 # bam2msa
-convert alignment bam/sam file to multiple sequence alignment(msa) file
+convert alignment bam file to multiple sequence alignment(msa) file
 
 ```
 $ cd test/
