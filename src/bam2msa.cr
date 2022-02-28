@@ -18,7 +18,7 @@ class Bam2Msa < Admiral::Command
     default: 1_i32,
     description: "only for read which span the whole region. 0 mean all read which overlap with the region, 1 mean is read which span the whole region"
   define_help description: "convert bam to msa format for alignment file"
-  define_version "0.0.1"
+  define_version "0.0.2"
 
   COMPILE_TIME = Time.local
 
