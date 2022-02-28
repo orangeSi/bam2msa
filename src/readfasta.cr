@@ -1,4 +1,6 @@
 def read_fasta(fasta : String, chrs : Array = [] of String)
+  #puts "chrs=#{chrs}"
+  #puts "#start read fasta #{fasta}"
   ref = {} of String => String
   id = ""
   seq = ""
@@ -27,5 +29,6 @@ def read_fasta(fasta : String, chrs : Array = [] of String)
     ref[id] = seq.gsub(/\s/, "")
   end
   raise "sorry, occur a bug: not get all #{chrs} for #{fasta}. If you give a github issue, I will appreciate it~\n" if chrs_size >= 1 && ref.keys.size != chrs_size
+  #puts "#end read fasta #{fasta}"
   return ref
 end

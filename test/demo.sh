@@ -1,6 +1,6 @@
 set -e
-./bam2msa ref.fa out.bwa.bam >out.bam2msa
-cat out.bam2msa |grep -v '^#'|awk '{print ">"$1"\n"$3"\n>"$4"\n"$5}' >out.bam2msa.msa
+./bam2msa ref.fa out.bwa.bam NC_045512.2_1bp_to_1680bp:1-1680 --span-whole-region-read-only 0 >out.bam2msa
+cat out.bam2msa |grep -v '^#'|awk -F '\t' '{print ">"$4"\n"$2"\n>"$5"\n"$1}'|sed 's/:.*//' >out.bam2msa.msa
 
 ln -sf  out.bam2msa.msa case
 ln -sf  ../data/out.mafft.msa control
