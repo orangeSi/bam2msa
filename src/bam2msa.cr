@@ -220,24 +220,33 @@ class Bam2Msa < Admiral::Command
 
     ref_msa = ref_msa_cut
     query_msa = query_msa_cut
+
+    if query_msa.size != ref_msa.size
+      raise("error: ref_msa and query_msa size not equal for #{arr[0]} and #{cigar}. #{query_msa.size} != #{ref_msa.size}, query_msa=#{query_msa}, ref_msa=#{ref_msa}") 
+    end
     # get consensue sequence
     # puts "get consens"
     # puts "query_msa=#{query_msa}"
     # puts "ref_msa=  #{ref_msa}\n"
-    #query_msa.split(//).zip(ref_msa.split(//)) do |qe, re|
-    query_msa.each_char.zip(ref_msa.each_char) do |qe, re|
-      next if qe == ""
+    #query_msa.split(//).zip(ref_msa.split(//)) do |qe, re| # qe is String
+    #p! query_msa, ref_msa
+    query_msa.each_char.zip(ref_msa.each_char) do |qe, re| # qe is Char. zip cost time is near the size.times
+    #query_msa.size.times do |idx|
+    #  qe = query_msa[idx]
+    #  re = ref_msa[idx]
+      #next if qe == ''
       if qe == re
-        if qe != "-" # match
+        if qe != '-' # match
           consensus += "="
         else
           raise "error: get both - for query=#{query_id} and ref=#{ref_id} for cigar=#{cigar}\n"
         end
       else
-        if qe != "-" && re != "-" # mismatch
+        if qe != '-' && re != '-' # mismatch
+          #p! qe, re
           consensus += "X"
         else           # indel
-          if qe == "-" # deletion
+          if qe == '-' # deletion
             consensus += "D"
           else # insertion
             consensus += "I"
@@ -249,9 +258,6 @@ class Bam2Msa < Admiral::Command
 
     if query_msa.size != consensus.size
       raise("error: consensus and query_msa size not equal for #{arr[0]} and #{cigar}. #{query_msa.size} != #{consensus.size}, consensus=#{consensus}, query_msa=#{query_msa}, ref_msa=#{ref_msa}")
-    end
-    if query_msa.size != ref_msa.size
-      raise("error: ref_msa and query_msa size not equal for #{arr[0]} and #{cigar}. #{query_msa.size} != #{ref_msa.size}, query_msa=#{query_msa}, ref_msa=#{ref_msa}") 
     end
     # puts "read line done"
     return MSA.new(ref_id, the_region, ref_msa, arr[0], query_msa, consensus, raw_cigar, rflag, pos)

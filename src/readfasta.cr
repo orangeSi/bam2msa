@@ -6,6 +6,7 @@ def read_fasta(fasta : String, chrs : Array = [] of String)
   seq = ""
   chrs_size = chrs.size
   skip_chr = false
+  got_chrs_size = 0
   File.each_line(fasta) do |line|
     if line.match(/^>/)
       raise "error: not support line: #{line} in #{fasta}\n" if line.match(/^>\s/)
@@ -16,10 +17,16 @@ def read_fasta(fasta : String, chrs : Array = [] of String)
       line =~ /^>(\S+)/
       id = $1
       seq = ""
+      #puts "reading #{id}"
       if chrs_size >= 1
         skip_chr = (chrs.includes?(id)) ? false : true
       end
-      id = "" if skip_chr
+      if skip_chr
+        id = ""
+        break if got_chrs_size == chrs_size
+      else
+        got_chrs_size +=1
+      end
     elsif skip_chr == false
       seq += line
     end
