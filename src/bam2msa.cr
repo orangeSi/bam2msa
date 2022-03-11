@@ -235,6 +235,8 @@ class Bam2Msa < Admiral::Command
     #  qe = query_msa[idx]
     #  re = ref_msa[idx]
       #next if qe == ''
+      qe = qe.upcase
+      re = re.upcase
       if qe == re
         if qe != '-' # match
           consensus += "="
