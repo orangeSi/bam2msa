@@ -31,6 +31,9 @@ class Bam2Msa < Admiral::Command
       Bam2Msa.run "--help"
     end
 
+    if ARGV[1] == "-"
+      raise "error: please change - to STDIN"
+    end
     rgs = parser_regions(arguments.regions)
     bam = arguments.bam
 
@@ -78,6 +81,7 @@ class Bam2Msa < Admiral::Command
      end
     else
       STDIN.each_line do |line|
+		next if line.starts_with?("@")
 		last_ref_msa_no_gap = process_oneline_of_bam(line, primary_only, ref, rgs, span_whole_region_read_only, last_ref_msa_no_gap)
       end
     end
