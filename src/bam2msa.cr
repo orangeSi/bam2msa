@@ -6,7 +6,7 @@ class Bam2Msa < Admiral::Command
     description: "ref fasta file",
     required: true
   define_argument bam,
-    description: "bam alignemnt file",
+    description: "bam alignemnt file or STDIN ",
     required: true
   define_argument regions : String,
     description: "display read and ref msa alignment in these regions, example: chr1:1000-1200,chr2:2000-2300",
@@ -32,6 +32,8 @@ class Bam2Msa < Admiral::Command
     end
 
     rgs = parser_regions(arguments.regions)
+    bam = arguments.bam
+
     if flags.measure_run_time >=1
       t0 = Time.utc
       ref = read_fasta(arguments.ref, chrs: rgs.keys)
@@ -41,14 +43,14 @@ class Bam2Msa < Admiral::Command
       #puts "flags.span_whole_region_read_only #{flags.span_whole_region_read_only}"
       t2 = Time.utc
       arguments.regions.split(",").each do |rg|
-        convert_bam2msa(arguments.bam, ref, flags.primary_only, rg, flags.span_whole_region_read_only)
+        convert_bam2msa(bam, ref, flags.primary_only, rg, flags.span_whole_region_read_only)
       end
       t3 = Time.utc
       puts "## convert_bam2msa cost #{t3-t2}s"
     else
       ref = read_fasta(arguments.ref, chrs: rgs.keys)
       arguments.regions.split(",").each do |rg|
-        convert_bam2msa(arguments.bam, ref, flags.primary_only, rg, flags.span_whole_region_read_only)
+        convert_bam2msa(bam, ref, flags.primary_only, rg, flags.span_whole_region_read_only)
       end
     end
   end
@@ -64,19 +66,36 @@ class Bam2Msa < Admiral::Command
 
     # read the bam
     # # check bam.bai file if exists!
-    if File.exists?("#{bam}.bai") == false
+    if bam != "STDIN" && File.exists?("#{bam}.bai") == false
       raise("error: #{bam}.bai not exists, so need samootls index #{bam} before!")
     end
-    Process.run("samtools view #{bam} #{region}", shell: true) do |proc|
-      while line = proc.output.gets
-        # to do: parallel this by channel.send(line)
-        msa = bam2msa_oneline(line, primary_only, ref, rgs, span_whole_region_read_only)
-        next if msa.is_a?(Nil)
-        # puts "#{msa.ref}\t#{msa.ref_region}\t#{msa.ref_msa}\t#{msa.query}\t#{msa.query_msa}\t#{msa.consensus}\t#{msa.cigar}\t#{msa.flag}"
-        puts "#{msa.query_msa}\t#{msa.ref_msa}\t#{msa.consensus}\t#{msa.ref}:#{msa.ref_region}\t#{msa.query}\t#{msa.flag}\t#{msa.pos}\t#{msa.cigar}"
+    last_ref_msa_no_gap = ""
+    if bam != "STDIN"
+     Process.run("samtools view #{bam} #{region}", shell: true) do |proc|
+       while line = proc.output.gets
+		last_ref_msa_no_gap = process_oneline_of_bam(line, primary_only, ref, rgs, span_whole_region_read_only, last_ref_msa_no_gap)
+       end
+     end
+    else
+      STDIN.each_line do |line|
+		last_ref_msa_no_gap = process_oneline_of_bam(line, primary_only, ref, rgs, span_whole_region_read_only, last_ref_msa_no_gap)
       end
     end
   end
+
+def process_oneline_of_bam(line : String, primary_only : Int32, ref : Hash(String, String), rgs : Hash(String, RG), span_whole_region_read_only : Int32, last_ref_msa_no_gap : String)
+         # to do: parallel this by channel.send(line)
+         msa = bam2msa_oneline(line, primary_only, ref, rgs, span_whole_region_read_only)
+         return last_ref_msa_no_gap if msa.is_a?(Nil)
+         if last_ref_msa_no_gap != "" && msa.ref_msa.gsub(/-/, "") != last_ref_msa_no_gap
+		raise "error: last_ref_msa_no_gap=#{last_ref_msa_no_gap} but get msa.ref_msa=#{msa.ref_msa} now!"
+         end
+         last_ref_msa_no_gap = msa.ref_msa.gsub(/-/, "")
+         #puts "#{msa.ref}\t#{msa.ref_region}\t#{msa.ref_msa}\t#{msa.query}\t#{msa.query_msa}\t#{msa.consensus}\t#{msa.cigar}\t#{msa.flag}"
+         puts "#{msa.query_msa}\t#{msa.ref_msa}\t#{msa.consensus}\t#{msa.ref}:#{msa.ref_region}\t#{msa.query}\t#{msa.flag}\t#{msa.pos}\t#{msa.cigar}"
+  	return last_ref_msa_no_gap
+end
+
 
   def bam2msa_oneline(line : String, primary_only : Int32, ref : Hash(String, String), rgs = {} of String => RG, span_whole_region_read_only : Int32 = 1)
     # puts "read line: #{line}"
@@ -172,7 +191,7 @@ class Bam2Msa < Admiral::Command
       end
     end
 
-    return nil if span_whole_region_read_only >=1 &&  (ref_pos+1) < rgs_end
+    return nil if span_whole_region_read_only >=1 &&  ref_pos < rgs_end
 
     # --------- query
     #  ------------ ref
@@ -213,7 +232,7 @@ class Bam2Msa < Admiral::Command
     end
 
     # when ref_pos < rgs_end
-    if (ref_pos+1) < rgs_end
+    if ref_pos < rgs_end
       ref_msa_cut += ref_seq[ref_pos...rgs_end]
       query_msa_cut += "-"*(rgs_end-ref_pos)
     end
@@ -260,6 +279,10 @@ class Bam2Msa < Admiral::Command
 
     if query_msa.size != consensus.size
       raise("error: consensus and query_msa size not equal for #{arr[0]} and #{cigar}. #{query_msa.size} != #{consensus.size}, consensus=#{consensus}, query_msa=#{query_msa}, ref_msa=#{ref_msa}")
+    end
+
+    if ref_msa.gsub(/-/, "").size != (rgs_end-rgs_start+1)
+       raise("error: rgs_end-rgs_end+1=#{rgs_end-rgs_start+1} but query_msa=#{query_msa} ref_msa=#{ref_msa}")
     end
     # puts "read line done"
     return MSA.new(ref_id, the_region, ref_msa, arr[0], query_msa, consensus, raw_cigar, rflag, pos)
