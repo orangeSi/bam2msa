@@ -59,7 +59,7 @@ class Bam2Msa < Admiral::Command
   end
 
   def convert_bam2msa(bam : String, ref : Hash(String, String), primary_only : Int32, region : String, span_whole_region_read_only : Int32)
-    raise "error: cann't find samtools in $PATH" unless Process.find_executable("samtools")
+    #raise "error: cann't find samtools in $PATH" unless Process.find_executable("samtools")
     # title
     # puts "#refid\tref_cut_region\tref_msa\tquery_id\tquery_msa\tconsensus_msa\traw_cigar\tflag"
     puts "#query_msa\tref_msa\tconsensus_msa\tref_cut_region\tquery_id\tFLAG\tPOS_in_Bam\tCIGAR"
@@ -74,6 +74,7 @@ class Bam2Msa < Admiral::Command
     end
     last_ref_msa_no_gap = ""
     if bam != "STDIN"
+     raise "error: cann't find samtools in $PATH" unless Process.find_executable("samtools")
      Process.run("samtools view #{bam} #{region}", shell: true) do |proc|
        while line = proc.output.gets
 		last_ref_msa_no_gap = process_oneline_of_bam(line, primary_only, ref, rgs, span_whole_region_read_only, last_ref_msa_no_gap)
