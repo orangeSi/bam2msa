@@ -52,3 +52,7 @@ $ sh demo.sh
 ok, test passed!
 
 ```
+## for wasm support
+```
+samtools view data/out.bwa.bam|wasmer  --dir=data/ src/bam2msa_final.wasm -- data/ref.fa STDIN NC_045512.2_1bp_to_1680bp:1-1680 
+```
