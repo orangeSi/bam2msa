@@ -15,13 +15,16 @@ class Bam2Msa < Admiral::Command
     default: 1_i32,
     description: "only for primary alignment. 0 mean all alingment, 1 is only primary alignment"
   define_flag span_whole_region_read_only : Int32,
-    default: 1_i32,
+    default: 0_i32,
     description: "only for read which span the whole region. 0 mean all read which overlap with the region, 1 mean is read which span the whole region"
+  define_flag display_read_boundary : Int32,
+   default: 1_i32,
+   description: "display the read boundary, 0 mean not display"
   define_flag measure_run_time : Int32,
     default: 0_i32,
     description: "measure the run time of code"
   define_help description: "convert bam to msa format for alignment file"
-  define_version "0.0.2"
+  define_version "0.0.3"
 
   COMPILE_TIME = Time.local
 
@@ -46,23 +49,23 @@ class Bam2Msa < Admiral::Command
       #puts "flags.span_whole_region_read_only #{flags.span_whole_region_read_only}"
       t2 = Time.utc
       arguments.regions.split(",").each do |rg|
-        convert_bam2msa(bam, ref, flags.primary_only, rg, flags.span_whole_region_read_only)
+        convert_bam2msa(bam, ref, flags.primary_only, rg, flags.span_whole_region_read_only, flags.display_read_boundary)
       end
       t3 = Time.utc
       puts "## convert_bam2msa cost #{t3-t2}s"
     else
       ref = read_fasta(arguments.ref, chrs: rgs.keys)
       arguments.regions.split(",").each do |rg|
-        convert_bam2msa(bam, ref, flags.primary_only, rg, flags.span_whole_region_read_only)
+        convert_bam2msa(bam, ref, flags.primary_only, rg, flags.span_whole_region_read_only, flags.display_read_boundary)
       end
     end
   end
 
-  def convert_bam2msa(bam : String, ref : Hash(String, String), primary_only : Int32, region : String, span_whole_region_read_only : Int32)
+  def convert_bam2msa(bam : String, ref : Hash(String, String), primary_only : Int32, region : String, span_whole_region_read_only : Int32, display_read_boundary : Int32)
     #raise "error: cann't find samtools in $PATH" unless Process.find_executable("samtools")
     # title
     # puts "#refid\tref_cut_region\tref_msa\tquery_id\tquery_msa\tconsensus_msa\traw_cigar\tflag"
-    puts "#query_msa\tref_msa\tconsensus_msa\tref_cut_region\tquery_id\tFLAG\tPOS_in_Bam\tCIGAR"
+    puts "#query_msa\tref_msa\tconsensus_msa\tref_cut_region\tquery_id\tr1_or_r2\tread_strand\tFLAG_in_Bam\tPOS_in_Bam\tMAPQ\tCIGAR"
 
     # get region of output
     rgs = parser_regions(region)
@@ -77,32 +80,32 @@ class Bam2Msa < Admiral::Command
      raise "error: cann't find samtools in $PATH" unless Process.find_executable("samtools")
      Process.run("samtools view #{bam} #{region}", shell: true) do |proc|
        while line = proc.output.gets
-		last_ref_msa_no_gap = process_oneline_of_bam(line, primary_only, ref, rgs, span_whole_region_read_only, last_ref_msa_no_gap)
+		last_ref_msa_no_gap = process_oneline_of_bam(line, primary_only, ref, rgs, span_whole_region_read_only, last_ref_msa_no_gap, display_read_boundary)
        end
      end
     else
       STDIN.each_line do |line|
 		next if line.starts_with?("@")
-		last_ref_msa_no_gap = process_oneline_of_bam(line, primary_only, ref, rgs, span_whole_region_read_only, last_ref_msa_no_gap)
+		last_ref_msa_no_gap = process_oneline_of_bam(line, primary_only, ref, rgs, span_whole_region_read_only, last_ref_msa_no_gap, display_read_boundary)
       end
     end
   end
 
-def process_oneline_of_bam(line : String, primary_only : Int32, ref : Hash(String, String), rgs : Hash(String, RG), span_whole_region_read_only : Int32, last_ref_msa_no_gap : String)
+def process_oneline_of_bam(line : String, primary_only : Int32, ref : Hash(String, String), rgs : Hash(String, RG), span_whole_region_read_only : Int32, last_ref_msa_no_gap : String, display_read_boundary : Int32)
          # to do: parallel this by channel.send(line)
-         msa = bam2msa_oneline(line, primary_only, ref, rgs, span_whole_region_read_only)
+         msa = bam2msa_oneline(line, primary_only, ref, rgs, span_whole_region_read_only, display_read_boundary)
          return last_ref_msa_no_gap if msa.is_a?(Nil)
          if last_ref_msa_no_gap != "" && msa.ref_msa.gsub(/-/, "") != last_ref_msa_no_gap
 		raise "error: last_ref_msa_no_gap=#{last_ref_msa_no_gap} but get msa.ref_msa=#{msa.ref_msa} now!"
          end
          last_ref_msa_no_gap = msa.ref_msa.gsub(/-/, "")
          #puts "#{msa.ref}\t#{msa.ref_region}\t#{msa.ref_msa}\t#{msa.query}\t#{msa.query_msa}\t#{msa.consensus}\t#{msa.cigar}\t#{msa.flag}"
-         puts "#{msa.query_msa}\t#{msa.ref_msa}\t#{msa.consensus}\t#{msa.ref}:#{msa.ref_region}\t#{msa.query}\t#{msa.flag}\t#{msa.pos}\t#{msa.cigar}"
+         puts "#{msa.query_msa}\t#{msa.ref_msa}\t#{msa.consensus}\t#{msa.ref}:#{msa.ref_region}\t#{msa.query}\t#{msa.r1_or_r2}\t#{msa.strand}\t#{msa.flag}\t#{msa.pos}\t#{msa.mapq}\t#{msa.cigar}"
   	return last_ref_msa_no_gap
 end
 
 
-  def bam2msa_oneline(line : String, primary_only : Int32, ref : Hash(String, String), rgs = {} of String => RG, span_whole_region_read_only : Int32 = 1)
+  def bam2msa_oneline(line : String, primary_only : Int32, ref : Hash(String, String), rgs = {} of String => RG, span_whole_region_read_only : Int32 = 1, display_read_boundary : Int32 = 1)
     # puts "read line: #{line}"
     arr = line.split(/\t/)
     rflag = arr[1].to_i32
@@ -113,12 +116,13 @@ end
     return nil if (rflag & 4) > 0                    # unmap = 4, filtered unmaped read
 
     query_id = arr[0]
-    arr[0] = "_R_#{query_id}" if (rflag & 16) != 0 # reversed read map to ref
+    #arr[0] = "_R_#{query_id}" 
 
     # ref[arr[2]] # ref fasta
     # arr[9] # SEQ
     # arr[5] # cigar
     pos = arr[3].to_i32
+    mapq = arr[4].to_i32
     cigar = arr[5]
     raw_cigar = arr[5]
 
@@ -128,6 +132,16 @@ end
     raise "error: ref #{ref_id} total size #{ref[ref_id].size}bp, but set #{rgs_end} in --regions \n" if rgs_end > ref[ref_id].size
 
     return nil if span_whole_region_read_only >=1 &&  pos > rgs_start
+
+    strand = "+"
+    strand = "-" if (rflag & 16) != 0 # reversed read map to ref
+    r1_or_r2 = "se"
+    if (rflag & 64) != 0
+      r1_or_r2 = "read1"
+    elsif (rflag & 128) != 0
+      r1_or_r2 = "read2"
+    end
+    
 
     # todo:if specific --regions chr1:200-300 , then cut the cigar for --regions
     # if rgs.has_key?(ref_id)
@@ -157,11 +171,15 @@ end
     # end
 
     # trim the softclip in the start/end  of ref
+    head_soft_clip_len = 0
+    tail_soft_clip_len = 0
     if cigar =~ /^(\d+)S/
-      query_pos += $1.to_i32
+      head_soft_clip_len = $1.to_i32
+      query_pos += head_soft_clip_len
       cigar = cigar.sub(/^\d+S/, "")
     end
     if cigar =~ /(\d+)S$/
+      tail_soft_clip_len = $1.to_i32
       cigar = cigar.sub(/\d+S$/, "")
     end
 
@@ -191,7 +209,7 @@ end
           query_msa += "-"*clen
           break if ref_pos > rgs_end # 跳过超出region的cigar
         else
-          raise("error: not recoginize cigar #{e}")
+          raise("error: not recoginize cigar #{e} at cigar=#{cigar}")
         end
       end
     end
@@ -225,7 +243,22 @@ end
     # when pos > rgs_start
     if pos > rgs_start
       ref_msa_cut += ref_seq[rgs_start - 1...pos - 1]
-      query_msa_cut += "-"*(pos - rgs_start)
+      if display_read_boundary >= 1
+        if head_soft_clip_len >0
+          soft_clip_len = head_soft_clip_len
+          if (pos - rgs_start) >= soft_clip_len
+              gap_len = pos - rgs_start - soft_clip_len
+          else
+              gap_len = 0
+              soft_clip_len = pos - rgs_start
+          end
+          query_msa_cut += " "* gap_len + "s"*soft_clip_len
+        else
+          query_msa_cut += " "*(pos - rgs_start)
+        end
+      else
+        query_msa_cut += "-"*(pos - rgs_start)
+      end
     end
 
     ref_msa.each_char_with_index do |c, i|
@@ -239,7 +272,22 @@ end
     # when ref_pos < rgs_end
     if ref_pos < rgs_end
       ref_msa_cut += ref_seq[ref_pos...rgs_end]
-      query_msa_cut += "-"*(rgs_end-ref_pos)
+      if display_read_boundary >= 1
+        if tail_soft_clip_len >0
+            soft_clip_len = tail_soft_clip_len
+            if (rgs_end-ref_pos) >= soft_clip_len
+                gap_len = rgs_end-ref_pos - soft_clip_len
+            else
+                gap_len = 0
+                soft_clip_len = rgs_end-ref_pos
+            end
+            query_msa_cut += " "* gap_len + "s"*soft_clip_len
+         else
+           query_msa_cut += " "*(rgs_end-ref_pos)
+         end
+      else
+        query_msa_cut += "-"*(rgs_end-ref_pos)
+      end
     end
 
     ref_msa = ref_msa_cut
@@ -268,15 +316,21 @@ end
           raise "error: get both - for query=#{query_id} and ref=#{ref_id} for cigar=#{cigar}\n"
         end
       else
-        if qe != '-' && re != '-' # mismatch
+        if qe != '-' && re != '-' && qe != 'S' && qe != ' ' # mismatch
           #p! qe, re
           consensus += "X"
-        else           # indel
+        elsif qe == '-' || re == '-' # indel
           if qe == '-' # deletion
             consensus += "D"
           else # insertion
             consensus += "I"
           end
+        elsif  qe == 'S'
+          consensus += "S"
+        elsif qe == ' '
+          consensus += " "
+        else
+          raise "error: qe=#{qe} re=#{re} for query_msa=#{query_msa} ref_msa=#{ref_msa} at cigar=#{cigar}"
         end
       end
     end
@@ -290,7 +344,7 @@ end
        raise("error: rgs_end-rgs_end+1=#{rgs_end-rgs_start+1} but query_msa=#{query_msa} ref_msa=#{ref_msa}")
     end
     # puts "read line done"
-    return MSA.new(ref_id, the_region, ref_msa, arr[0], query_msa, consensus, raw_cigar, rflag, pos)
+    return MSA.new(ref_id, the_region, ref_msa, arr[0], query_msa, consensus, raw_cigar, rflag, pos, mapq, r1_or_r2, strand)
     # puts "#{arr[2]}\t#{ref_msa}\t#{arr[0]}\t#{query_msa}\t#{consensus}\t#{cigar}\t#{arr[1]}"
   end
 
@@ -478,9 +532,9 @@ end
   end
 
   struct MSA
-    property ref, ref_region, ref_msa, query, query_msa, consensus, cigar, flag, pos
+    property ref, ref_region, ref_msa, query, query_msa, consensus, cigar, flag, pos, mapq, r1_or_r2, strand
 
-    def initialize(@ref : String, @ref_region : String, @ref_msa : String, @query : String, @query_msa : String, @consensus : String, @cigar : String, @flag : Int32, @pos : Int32)
+    def initialize(@ref : String, @ref_region : String, @ref_msa : String, @query : String, @query_msa : String, @consensus : String, @cigar : String, @flag : Int32, @pos : Int32, @mapq : Int32, @r1_or_r2 : String, @strand : String)
     end
   end
 end
