@@ -1,5 +1,8 @@
+require "colorize"
 require "admiral"
 require "./readfasta"
+
+Colorize.on_tty_only! # only display color output in terminate instead of output file
 
 class Bam2Msa < Admiral::Command
   define_argument ref,
@@ -23,8 +26,11 @@ class Bam2Msa < Admiral::Command
   define_flag measure_run_time : Int32,
     default: 0_i32,
     description: "measure the run time of code"
+  define_flag color_snp_indel : Int32,
+    default: 0_i32,
+    description: "colorize snp and indel of output"
   define_help description: "convert bam to msa format for alignment file"
-  define_version "0.0.3"
+  define_version "0.1"
 
   COMPILE_TIME = Time.local
 
@@ -49,19 +55,19 @@ class Bam2Msa < Admiral::Command
       #puts "flags.span_whole_region_read_only #{flags.span_whole_region_read_only}"
       t2 = Time.utc
       arguments.regions.split(",").each do |rg|
-        convert_bam2msa(bam, ref, flags.primary_only, rg, flags.span_whole_region_read_only, flags.display_read_boundary)
+        convert_bam2msa(bam, ref, flags.primary_only, rg, flags.span_whole_region_read_only, flags.display_read_boundary, flags.color_snp_indel)
       end
       t3 = Time.utc
       puts "## convert_bam2msa cost #{t3-t2}s"
     else
       ref = read_fasta(arguments.ref, chrs: rgs.keys)
       arguments.regions.split(",").each do |rg|
-        convert_bam2msa(bam, ref, flags.primary_only, rg, flags.span_whole_region_read_only, flags.display_read_boundary)
+        convert_bam2msa(bam, ref, flags.primary_only, rg, flags.span_whole_region_read_only, flags.display_read_boundary, flags.color_snp_indel)
       end
     end
   end
 
-  def convert_bam2msa(bam : String, ref : Hash(String, String), primary_only : Int32, region : String, span_whole_region_read_only : Int32, display_read_boundary : Int32)
+  def convert_bam2msa(bam : String, ref : Hash(String, String), primary_only : Int32, region : String, span_whole_region_read_only : Int32, display_read_boundary : Int32, color_snp_indel : Int32)
     #raise "error: cann't find samtools in $PATH" unless Process.find_executable("samtools")
     # title
     # puts "#refid\tref_cut_region\tref_msa\tquery_id\tquery_msa\tconsensus_msa\traw_cigar\tflag"
@@ -73,27 +79,27 @@ class Bam2Msa < Admiral::Command
     # read the bam
     # # check bam.bai file if exists!
     if bam != "STDIN" && File.exists?("#{bam}.bai") == false
-      raise("error: #{bam}.bai not exists, so need samootls index #{bam} before!")
+      raise("error: #{bam}.bai not exists, so need samtools index #{bam} before!")
     end
     last_ref_msa_no_gap = ""
     if bam != "STDIN"
      raise "error: cann't find samtools in $PATH" unless Process.find_executable("samtools")
      Process.run("samtools view #{bam} #{region}", shell: true) do |proc|
        while line = proc.output.gets
-		last_ref_msa_no_gap = process_oneline_of_bam(line, primary_only, ref, rgs, span_whole_region_read_only, last_ref_msa_no_gap, display_read_boundary)
+		last_ref_msa_no_gap = process_oneline_of_bam(line, primary_only, ref, rgs, span_whole_region_read_only, last_ref_msa_no_gap, display_read_boundary, color_snp_indel)
        end
      end
     else
       STDIN.each_line do |line|
 		next if line.starts_with?("@")
-		last_ref_msa_no_gap = process_oneline_of_bam(line, primary_only, ref, rgs, span_whole_region_read_only, last_ref_msa_no_gap, display_read_boundary)
+		last_ref_msa_no_gap = process_oneline_of_bam(line, primary_only, ref, rgs, span_whole_region_read_only, last_ref_msa_no_gap, display_read_boundary, color_snp_indel)
       end
     end
   end
 
-def process_oneline_of_bam(line : String, primary_only : Int32, ref : Hash(String, String), rgs : Hash(String, RG), span_whole_region_read_only : Int32, last_ref_msa_no_gap : String, display_read_boundary : Int32)
+def process_oneline_of_bam(line : String, primary_only : Int32, ref : Hash(String, String), rgs : Hash(String, RG), span_whole_region_read_only : Int32, last_ref_msa_no_gap : String, display_read_boundary : Int32, color_snp_indel : Int32)
          # to do: parallel this by channel.send(line)
-         msa = bam2msa_oneline(line, primary_only, ref, rgs, span_whole_region_read_only, display_read_boundary)
+         msa = bam2msa_oneline(line, primary_only, ref, rgs, span_whole_region_read_only, display_read_boundary, color_snp_indel)
          return last_ref_msa_no_gap if msa.is_a?(Nil)
          if last_ref_msa_no_gap != "" && msa.ref_msa.gsub(/-/, "") != last_ref_msa_no_gap
 		raise "error: last_ref_msa_no_gap=#{last_ref_msa_no_gap} but get msa.ref_msa=#{msa.ref_msa} now!"
@@ -105,7 +111,7 @@ def process_oneline_of_bam(line : String, primary_only : Int32, ref : Hash(Strin
 end
 
 
-  def bam2msa_oneline(line : String, primary_only : Int32, ref : Hash(String, String), rgs = {} of String => RG, span_whole_region_read_only : Int32 = 1, display_read_boundary : Int32 = 1)
+  def bam2msa_oneline(line : String, primary_only : Int32, ref : Hash(String, String), rgs = {} of String => RG, span_whole_region_read_only : Int32 = 1, display_read_boundary : Int32 = 1, color_snp_indel : Int32 = 0)
     # puts "read line: #{line}"
     arr = line.split(/\t/)
     rflag = arr[1].to_i32
@@ -281,7 +287,7 @@ end
                 gap_len = 0
                 soft_clip_len = rgs_end-ref_pos
             end
-            query_msa_cut += " "* gap_len + "s"*soft_clip_len
+            query_msa_cut += "s"*soft_clip_len + " "* gap_len
          else
            query_msa_cut += " "*(rgs_end-ref_pos)
          end
@@ -344,7 +350,7 @@ end
        raise("error: rgs_end-rgs_end+1=#{rgs_end-rgs_start+1} but query_msa=#{query_msa} ref_msa=#{ref_msa}")
     end
     # puts "read line done"
-    return MSA.new(ref_id, the_region, ref_msa, arr[0], query_msa, consensus, raw_cigar, rflag, pos, mapq, r1_or_r2, strand)
+    return MSA.new(ref_id, the_region, ref_msa, arr[0], query_msa, consensus, raw_cigar, rflag, pos, mapq, r1_or_r2, strand, color_snp_indel)
     # puts "#{arr[2]}\t#{ref_msa}\t#{arr[0]}\t#{query_msa}\t#{consensus}\t#{cigar}\t#{arr[1]}"
   end
 
@@ -534,7 +540,10 @@ end
   struct MSA
     property ref, ref_region, ref_msa, query, query_msa, consensus, cigar, flag, pos, mapq, r1_or_r2, strand
 
-    def initialize(@ref : String, @ref_region : String, @ref_msa : String, @query : String, @query_msa : String, @consensus : String, @cigar : String, @flag : Int32, @pos : Int32, @mapq : Int32, @r1_or_r2 : String, @strand : String)
+    def initialize(@ref : String, @ref_region : String, @ref_msa : String, @query : String, @query_msa : String, @consensus : String, @cigar : String, @flag : Int32, @pos : Int32, @mapq : Int32, @r1_or_r2 : String, @strand : String, color_snp_indel : Int32)
+      if color_snp_indel > 0
+         # 用颜色标记 query_msa 和 ref_msa中的 snp/indel
+      end
     end
   end
 end
