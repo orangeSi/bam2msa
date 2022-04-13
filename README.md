@@ -4,7 +4,7 @@ convert alignment bam file to multiple sequence alignment(msa) file
 ```
 $ cd test/
 
-$ ./bam2msa ref.fa out.bwa.bam NC_045512.2_1bp_to_1680bp:1-20|cut -f 1-7|c1
+$ ./bam2msa ref.fa out.bwa.bam NC_045512.2_1bp_to_1680bp:1-20|cut -f 1-7|column -ts $'\t'|less -RS
 1                     2                     3                     4                               5         6     7
 #query_msa            ref_msa               consensus_msa         ref_cut_region                  query_id  FLAG  POS_in_Bam
 ATTAAAGGTTTATACC--CC  ATTAAAGGTTTATACCTTCC  ================DD==  NC_045512.2_1bp_to_1680bp:1-20  clone1    0     1
