@@ -2,7 +2,10 @@ require "colorize"
 require "admiral"
 require "./readfasta"
 
-Colorize.on_tty_only! # only display color output in terminate instead of output file
+## configure for colorsize snp/indel
+MISMATCH_COLOR = :red
+INDEL_COLOR = :blue
+#Colorize.on_tty_only! # only display color output in terminate instead of output file
 
 class Bam2Msa < Admiral::Command
   define_argument ref,
@@ -26,7 +29,7 @@ class Bam2Msa < Admiral::Command
   define_flag measure_run_time : Int32,
     default: 0_i32,
     description: "measure the run time of code"
-  define_flag color_snp_indel : Int32,
+  define_flag colorize_snp_indel : Int32,
     default: 0_i32,
     description: "colorize snp and indel of output"
   define_help description: "convert bam to msa format for alignment file"
@@ -55,19 +58,19 @@ class Bam2Msa < Admiral::Command
       #puts "flags.span_whole_region_read_only #{flags.span_whole_region_read_only}"
       t2 = Time.utc
       arguments.regions.split(",").each do |rg|
-        convert_bam2msa(bam, ref, flags.primary_only, rg, flags.span_whole_region_read_only, flags.display_read_boundary, flags.color_snp_indel)
+        convert_bam2msa(bam, ref, flags.primary_only, rg, flags.span_whole_region_read_only, flags.display_read_boundary, flags.colorize_snp_indel)
       end
       t3 = Time.utc
       puts "## convert_bam2msa cost #{t3-t2}s"
     else
       ref = read_fasta(arguments.ref, chrs: rgs.keys)
       arguments.regions.split(",").each do |rg|
-        convert_bam2msa(bam, ref, flags.primary_only, rg, flags.span_whole_region_read_only, flags.display_read_boundary, flags.color_snp_indel)
+        convert_bam2msa(bam, ref, flags.primary_only, rg, flags.span_whole_region_read_only, flags.display_read_boundary, flags.colorize_snp_indel)
       end
     end
   end
 
-  def convert_bam2msa(bam : String, ref : Hash(String, String), primary_only : Int32, region : String, span_whole_region_read_only : Int32, display_read_boundary : Int32, color_snp_indel : Int32)
+  def convert_bam2msa(bam : String, ref : Hash(String, String), primary_only : Int32, region : String, span_whole_region_read_only : Int32, display_read_boundary : Int32, colorize_snp_indel : Int32)
     #raise "error: cann't find samtools in $PATH" unless Process.find_executable("samtools")
     # title
     # puts "#refid\tref_cut_region\tref_msa\tquery_id\tquery_msa\tconsensus_msa\traw_cigar\tflag"
@@ -86,32 +89,32 @@ class Bam2Msa < Admiral::Command
      raise "error: cann't find samtools in $PATH" unless Process.find_executable("samtools")
      Process.run("samtools view #{bam} #{region}", shell: true) do |proc|
        while line = proc.output.gets
-		last_ref_msa_no_gap = process_oneline_of_bam(line, primary_only, ref, rgs, span_whole_region_read_only, last_ref_msa_no_gap, display_read_boundary, color_snp_indel)
+		last_ref_msa_no_gap = process_oneline_of_bam(line, primary_only, ref, rgs, span_whole_region_read_only, last_ref_msa_no_gap, display_read_boundary, colorize_snp_indel)
        end
      end
     else
       STDIN.each_line do |line|
 		next if line.starts_with?("@")
-		last_ref_msa_no_gap = process_oneline_of_bam(line, primary_only, ref, rgs, span_whole_region_read_only, last_ref_msa_no_gap, display_read_boundary, color_snp_indel)
+		last_ref_msa_no_gap = process_oneline_of_bam(line, primary_only, ref, rgs, span_whole_region_read_only, last_ref_msa_no_gap, display_read_boundary, colorize_snp_indel)
       end
     end
   end
 
-def process_oneline_of_bam(line : String, primary_only : Int32, ref : Hash(String, String), rgs : Hash(String, RG), span_whole_region_read_only : Int32, last_ref_msa_no_gap : String, display_read_boundary : Int32, color_snp_indel : Int32)
+def process_oneline_of_bam(line : String, primary_only : Int32, ref : Hash(String, String), rgs : Hash(String, RG), span_whole_region_read_only : Int32, last_ref_msa_no_gap : String, display_read_boundary : Int32, colorize_snp_indel : Int32)
          # to do: parallel this by channel.send(line)
-         msa = bam2msa_oneline(line, primary_only, ref, rgs, span_whole_region_read_only, display_read_boundary, color_snp_indel)
+         msa = bam2msa_oneline(line, primary_only, ref, rgs, span_whole_region_read_only, display_read_boundary, colorize_snp_indel)
          return last_ref_msa_no_gap if msa.is_a?(Nil)
          if last_ref_msa_no_gap != "" && msa.ref_msa.gsub(/-/, "") != last_ref_msa_no_gap
 		raise "error: last_ref_msa_no_gap=#{last_ref_msa_no_gap} but get msa.ref_msa=#{msa.ref_msa} now!"
          end
          last_ref_msa_no_gap = msa.ref_msa.gsub(/-/, "")
          #puts "#{msa.ref}\t#{msa.ref_region}\t#{msa.ref_msa}\t#{msa.query}\t#{msa.query_msa}\t#{msa.consensus}\t#{msa.cigar}\t#{msa.flag}"
-         puts "#{msa.query_msa}\t#{msa.ref_msa}\t#{msa.consensus}\t#{msa.ref}:#{msa.ref_region}\t#{msa.query}\t#{msa.r1_or_r2}\t#{msa.strand}\t#{msa.flag}\t#{msa.pos}\t#{msa.mapq}\t#{msa.cigar}"
+         puts "#{msa.query_msa_color}\t#{msa.ref_msa_color}\t#{msa.consensus}\t#{msa.ref}:#{msa.ref_region}\t#{msa.query}\t#{msa.r1_or_r2}\t#{msa.strand}\t#{msa.flag}\t#{msa.pos}\t#{msa.mapq}\t#{msa.cigar}"
   	return last_ref_msa_no_gap
 end
 
 
-  def bam2msa_oneline(line : String, primary_only : Int32, ref : Hash(String, String), rgs = {} of String => RG, span_whole_region_read_only : Int32 = 1, display_read_boundary : Int32 = 1, color_snp_indel : Int32 = 0)
+  def bam2msa_oneline(line : String, primary_only : Int32, ref : Hash(String, String), rgs = {} of String => RG, span_whole_region_read_only : Int32 = 1, display_read_boundary : Int32 = 1, colorize_snp_indel : Int32 = 0)
     # puts "read line: #{line}"
     arr = line.split(/\t/)
     rflag = arr[1].to_i32
@@ -350,7 +353,7 @@ end
        raise("error: rgs_end-rgs_end+1=#{rgs_end-rgs_start+1} but query_msa=#{query_msa} ref_msa=#{ref_msa}")
     end
     # puts "read line done"
-    return MSA.new(ref_id, the_region, ref_msa, arr[0], query_msa, consensus, raw_cigar, rflag, pos, mapq, r1_or_r2, strand, color_snp_indel)
+    return MSA.new(ref_id, the_region, ref_msa, arr[0], query_msa, consensus, raw_cigar, rflag, pos, mapq, r1_or_r2, strand, colorize_snp_indel)
     # puts "#{arr[2]}\t#{ref_msa}\t#{arr[0]}\t#{query_msa}\t#{consensus}\t#{cigar}\t#{arr[1]}"
   end
 
@@ -538,14 +541,42 @@ end
   end
 
   struct MSA
-    property ref, ref_region, ref_msa, query, query_msa, consensus, cigar, flag, pos, mapq, r1_or_r2, strand
+    property ref, ref_region, ref_msa, query, query_msa, consensus, cigar, flag, pos, mapq, r1_or_r2, strand, ref_msa_color, query_msa_color
 
-    def initialize(@ref : String, @ref_region : String, @ref_msa : String, @query : String, @query_msa : String, @consensus : String, @cigar : String, @flag : Int32, @pos : Int32, @mapq : Int32, @r1_or_r2 : String, @strand : String, color_snp_indel : Int32)
-      if color_snp_indel > 0
+    def initialize(@ref : String, @ref_region : String, @ref_msa : String, @query : String, @query_msa : String, @consensus : String, @cigar : String, @flag : Int32, @pos : Int32, @mapq : Int32, @r1_or_r2 : String, @strand : String, colorize_snp_indel : Int32)
+      if colorize_snp_indel > 0
+         #raise "--colorize-snp-indel #{colorize_snp_indel}"
          # 用颜色标记 query_msa 和 ref_msa中的 snp/indel
+         query_msa_new = ""
+         ref_msa_new = ""
+ 	 @query_msa.each_char.zip(@ref_msa.each_char) do |qe, re|
+           if qe == ' ' || re == ' '
+             query_msa_new += qe 
+	     ref_msa_new += re
+           elsif qe == '-'
+             query_msa_new += qe
+             ref_msa_new += re.colorize.back(INDEL_COLOR).to_s
+	   elsif re == '-'
+             query_msa_new += qe.colorize.back(INDEL_COLOR).to_s
+	     ref_msa_new += re
+           elsif qe != re
+             query_msa_new += qe.colorize.back(MISMATCH_COLOR).to_s
+             ref_msa_new += re.colorize.back(MISMATCH_COLOR).to_s
+	   else
+             query_msa_new += qe
+             ref_msa_new += re
+           end
+         end
+         @query_msa_color = query_msa_new
+         @ref_msa_color = ref_msa_new
+         
+      else
+ 	 @query_msa_color = query_msa
+         @ref_msa_color = ref_msa
       end
     end
   end
+
 end
 
 Bam2Msa.run

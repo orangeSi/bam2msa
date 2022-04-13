@@ -56,3 +56,7 @@ ok, test passed!
 ```
 samtools view data/out.bwa.bam|wasmer  --dir=data/ src/bam2msa_final.wasm -- data/ref.fa STDIN NC_045512.2_1bp_to_1680bp:1-1680 
 ```
+## colorsize snp/indel of output with --colorize-snp-indel 1
+```
+bam2msa test/ref.fa test/out.bwa.bam NC_045512.2_1bp_to_1680bp:1-86 --span-whole-region-read-only 0 --colorize-snp-indel 1 |column -ts $'\t'|less -RS
+```
