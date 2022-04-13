@@ -14,20 +14,24 @@ ATTAAAGGTTTATACC--CC  ATTAAAGGTTTATACCTTCC  ================DD==  NC_045512.2_1b
 
 ```
 $ ../src/bam2msa
+Contact: ilikeorangeapple@gmail.com or go to https://github.com/orangeSi/bam2msa/issues
 Usage:
-  ./bam2msa [flags...] <ref> <bam> <regions> [arg...]
+  bam2msa [flags...] <ref> <bam> <regions> [arg...]
 
 convert bam to msa format for alignment file
 
 Flags:
+  --colorize-snp-indel (default: 0)           # colorize snp and indel of output
+  --display-read-boundary (default: 1)        # display the read boundary, 0 mean not display
   --help                                      # Displays help for the current command.
+  --measure-run-time (default: 0)             # measure the run time of code
   --primary-only (default: 1)                 # only for primary alignment. 0 mean all alingment, 1 is only primary alignment
-  --span-whole-region-read-only (default: 1)  # only for read which span the whole region. 0 mean all read which overlap with the region, 1 mean is read which span the whole region
+  --span-whole-region-read-only (default: 0)  # only for read which span the whole region. 0 mean all read which overlap with the region, 1 mean is read which span the whole region
   --version                                   # Displays the version of the current application.
 
 Arguments:
   ref (required)                              # ref fasta file
-  bam (required)                              # bam alignemnt file
+  bam (required)                              # bam alignemnt file or STDIN 
   regions (required)                          # display read and ref msa alignment in these regions, example: chr1:1000-1200,chr2:2000-2300
 
 ```
