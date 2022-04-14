@@ -32,6 +32,9 @@ class Bam2Msa < Admiral::Command
   define_flag colorize_snp_indel : Int32,
     default: 0_i32,
     description: "colorize snp and indel of output"
+  define_flag output_format : Int32,
+    default: 1_i32,
+    description: "1 -> query_msa,ref_msa,consensus_msa,ref_cut_region,query_id,r1_or_r2,read_strand,FLAG_in_Bam,POS_in_Bam,MAPQ,CIGAR; 2 -> seq_type,id,alignment,consensus,r1_or_r2,read_strand,FLAG_in_Bam,POS_in_Bam,MAPQ,CIGAR"
   define_help description: "convert bam to msa format for alignment file"
   define_version "0.1"
 
@@ -49,6 +52,10 @@ class Bam2Msa < Admiral::Command
     rgs = parser_regions(arguments.regions)
     bam = arguments.bam
 
+    if flags.output_format != 1 && flags.output_format != 2
+      raise "error: --output_format only support 1 or 2 instead of #{flags.output_format}"
+    end
+
     if flags.measure_run_time >=1
       t0 = Time.utc
       ref = read_fasta(arguments.ref, chrs: rgs.keys)
@@ -58,23 +65,32 @@ class Bam2Msa < Admiral::Command
       #puts "flags.span_whole_region_read_only #{flags.span_whole_region_read_only}"
       t2 = Time.utc
       arguments.regions.split(",").each do |rg|
-        convert_bam2msa(bam, ref, flags.primary_only, rg, flags.span_whole_region_read_only, flags.display_read_boundary, flags.colorize_snp_indel)
+        convert_bam2msa(bam, ref, flags.primary_only, rg, flags.span_whole_region_read_only, flags.display_read_boundary, flags.colorize_snp_indel, flags.output_format)
       end
       t3 = Time.utc
       puts "## convert_bam2msa cost #{t3-t2}s"
     else
       ref = read_fasta(arguments.ref, chrs: rgs.keys)
       arguments.regions.split(",").each do |rg|
-        convert_bam2msa(bam, ref, flags.primary_only, rg, flags.span_whole_region_read_only, flags.display_read_boundary, flags.colorize_snp_indel)
+        convert_bam2msa(bam, ref, flags.primary_only, rg, flags.span_whole_region_read_only, flags.display_read_boundary, flags.colorize_snp_indel, flags.output_format)
       end
     end
   end
 
-  def convert_bam2msa(bam : String, ref : Hash(String, String), primary_only : Int32, region : String, span_whole_region_read_only : Int32, display_read_boundary : Int32, colorize_snp_indel : Int32)
+  def convert_bam2msa(bam : String, ref : Hash(String, String), primary_only : Int32, region : String, span_whole_region_read_only : Int32, display_read_boundary : Int32, colorize_snp_indel : Int32, output_format : Int32)
     #raise "error: cann't find samtools in $PATH" unless Process.find_executable("samtools")
     # title
     # puts "#refid\tref_cut_region\tref_msa\tquery_id\tquery_msa\tconsensus_msa\traw_cigar\tflag"
-    puts "#query_msa\tref_msa\tconsensus_msa\tref_cut_region\tquery_id\tr1_or_r2\tread_strand\tFLAG_in_Bam\tPOS_in_Bam\tMAPQ\tCIGAR"
+    if output_format == 1
+      puts "#query_msa\tref_msa\tconsensus_msa\tref_cut_region\tquery_id\tr1_or_r2\tread_strand\tFLAG_in_Bam\tPOS_in_Bam\tMAPQ\tCIGAR"
+    else
+      if colorize_snp_indel == 0
+         alignment_title="alignment"
+      elsif colorize_snp_indel >=1
+         alignment_title="alignment("+"Red".colorize.back(MISMATCH_COLOR).to_s+"->mismatch; "+"Blue".colorize.back(INDEL_COLOR).to_s+"->insertion)"
+      end
+      puts "#seq_type\tid\t#{alignment_title}\tconsensus\tr1_or_r2\tread_strand\tFLAG_in_Bam\tPOS_in_Bam\tMAPQ\tCIGAR"
+    end
 
     # get region of output
     rgs = parser_regions(region)
@@ -89,27 +105,38 @@ class Bam2Msa < Admiral::Command
      raise "error: cann't find samtools in $PATH" unless Process.find_executable("samtools")
      Process.run("samtools view #{bam} #{region}", shell: true) do |proc|
        while line = proc.output.gets
-		last_ref_msa_no_gap = process_oneline_of_bam(line, primary_only, ref, rgs, span_whole_region_read_only, last_ref_msa_no_gap, display_read_boundary, colorize_snp_indel)
+		last_ref_msa_no_gap = process_oneline_of_bam(line, primary_only, ref, rgs, span_whole_region_read_only, last_ref_msa_no_gap, display_read_boundary, colorize_snp_indel, output_format)
        end
      end
     else
       STDIN.each_line do |line|
 		next if line.starts_with?("@")
-		last_ref_msa_no_gap = process_oneline_of_bam(line, primary_only, ref, rgs, span_whole_region_read_only, last_ref_msa_no_gap, display_read_boundary, colorize_snp_indel)
+		last_ref_msa_no_gap = process_oneline_of_bam(line, primary_only, ref, rgs, span_whole_region_read_only, last_ref_msa_no_gap, display_read_boundary, colorize_snp_indel, output_format)
       end
     end
   end
 
-def process_oneline_of_bam(line : String, primary_only : Int32, ref : Hash(String, String), rgs : Hash(String, RG), span_whole_region_read_only : Int32, last_ref_msa_no_gap : String, display_read_boundary : Int32, colorize_snp_indel : Int32)
+def process_oneline_of_bam(line : String, primary_only : Int32, ref : Hash(String, String), rgs : Hash(String, RG), span_whole_region_read_only : Int32, last_ref_msa_no_gap : String, display_read_boundary : Int32, colorize_snp_indel : Int32, output_format : Int32)
          # to do: parallel this by channel.send(line)
          msa = bam2msa_oneline(line, primary_only, ref, rgs, span_whole_region_read_only, display_read_boundary, colorize_snp_indel)
          return last_ref_msa_no_gap if msa.is_a?(Nil)
          if last_ref_msa_no_gap != "" && msa.ref_msa.gsub(/-/, "") != last_ref_msa_no_gap
 		raise "error: last_ref_msa_no_gap=#{last_ref_msa_no_gap} but get msa.ref_msa=#{msa.ref_msa} now!"
          end
-         last_ref_msa_no_gap = msa.ref_msa.gsub(/-/, "")
-         #puts "#{msa.ref}\t#{msa.ref_region}\t#{msa.ref_msa}\t#{msa.query}\t#{msa.query_msa}\t#{msa.consensus}\t#{msa.cigar}\t#{msa.flag}"
-         puts "#{msa.query_msa_color}\t#{msa.ref_msa_color}\t#{msa.consensus}\t#{msa.ref}:#{msa.ref_region}\t#{msa.query}\t#{msa.r1_or_r2}\t#{msa.strand}\t#{msa.flag}\t#{msa.pos}\t#{msa.mapq}\t#{msa.cigar}"
+         if output_format == 1
+           puts "#{msa.query_msa_color}\t#{msa.ref_msa_color}\t#{msa.consensus}\t#{msa.ref}:#{msa.ref_region}\t#{msa.query}\t#{msa.r1_or_r2}\t#{msa.strand}\t#{msa.flag}\t#{msa.pos}\t#{msa.mapq}\t#{msa.cigar}"
+         else # output_format == 2
+           if last_ref_msa_no_gap == "" # this is first alignment, so output ref line 
+             ref_line = "ref\t#{msa.ref}:#{msa.ref_region}\t#{msa.ref_msa.gsub(/-/, "")}\t\t\t\t\t\t\t"
+             if colorize_snp_indel == 0
+               puts ref_line
+             else
+	       puts ref_line.colorize(:green).to_s
+             end
+           end
+           puts "query\t#{msa.query}\t#{msa.query_msa_color}\t#{msa.consensus}\t#{msa.r1_or_r2}\t#{msa.strand}\t#{msa.flag}\t#{msa.pos}\t#{msa.mapq}\t#{msa.cigar}" # query line
+         end
+        last_ref_msa_no_gap = msa.ref_msa.gsub(/-/, "")
   	return last_ref_msa_no_gap
 end
 
