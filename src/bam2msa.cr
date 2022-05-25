@@ -31,7 +31,7 @@ class Bam2Msa < Admiral::Command
     description: "measure the run time of code"
   define_flag colorize_snp_indel : Int32,
     default: 0_i32,
-    description: "colorize snp and indel of output"
+    description: "colorize snp and indel of output, bam2msa ref.fa xx.bam chr1:xx-yy --colorize-snp-indel 1 |column -ts $'\\t'|less -RS"
   define_flag output_format : Int32,
     default: 1_i32,
     description: "1 -> query_msa,ref_msa,consensus_msa,ref_cut_region,query_id,r1_or_r2,read_strand,FLAG_in_Bam,POS_in_Bam,MAPQ,CIGAR; 2 -> seq_type,id,alignment,consensus,r1_or_r2,read_strand,FLAG_in_Bam,POS_in_Bam,MAPQ,CIGAR"
@@ -326,8 +326,8 @@ end
       end
     end
 
-    ref_msa = ref_msa_cut
-    query_msa = query_msa_cut
+    ref_msa = ref_msa_cut.upcase
+    query_msa = query_msa_cut.upcase
 
     if query_msa.size != ref_msa.size
       raise("error: ref_msa and query_msa size not equal for #{arr[0]} and #{cigar}. #{query_msa.size} != #{ref_msa.size}, query_msa=#{query_msa}, ref_msa=#{ref_msa}") 
@@ -343,8 +343,8 @@ end
     #  qe = query_msa[idx]
     #  re = ref_msa[idx]
       #next if qe == ''
-      qe = qe.upcase
-      re = re.upcase
+      #qe = qe.upcase
+      #re = re.upcase
       if qe == re
         if qe != '-' # match
           consensus += "="
