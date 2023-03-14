@@ -1,15 +1,30 @@
 # bam2msa
-convert alignment bam file to multiple sequence alignment(msa) file
+convert alignment bam file to multiple sequence alignment(msa) file(need samtools)
 
 ```
 $ cd test/
 
-$ ./bam2msa ref.fa out.bwa.bam NC_045512.2_1bp_to_1680bp:1-20|cut -f 1-7|column -ts $'\t'|less -RS
-1                     2                     3                     4                               5         6     7
-#query_msa            ref_msa               consensus_msa         ref_cut_region                  query_id  FLAG  POS_in_Bam
-ATTAAAGGTTTATACC--CC  ATTAAAGGTTTATACCTTCC  ================DD==  NC_045512.2_1bp_to_1680bp:1-20  clone1    0     1
+$ ../src/bam2msa ref.fa out.bwa.bam NC_045512.2_1bp_to_1680bp:15-43|cut -f 1-6|column -ts $'\t'|less -RS
+1                              2                              3                              4                                5         6
+#query_msa                     ref_msa                        consensus_msa                  ref_cut_region                   query_id  r1_or_r2
+CC--CCCAGGTAACAAACCAACCAACCTT  CCTTCCCAGGTAACAAACCAACCAACTTT  ==DD======================X==  NC_045512.2_1bp_to_1680bp:15-43  clone1    se
+               AACCAACCAACCTT  CCTTCCCAGGTAACAAACCAACCAACTTT                 ===========X==  NC_045512.2_1bp_to_1680bp:15-43  clone2    se
+
+
+## add --output-format 2
+$ ../src/bam2msa ref.fa out.bwa.bam NC_045512.2_1bp_to_1680bp:15-43 --output-format 2|cut -f 1-7|column -ts $'\t'|less -RS
+1          2                                3                              4                              5         6
+#seq_type  id                               alignment                      consensus                      r1_or_r2  read_strand
+ref        NC_045512.2_1bp_to_1680bp:15-43  CCTTCCCAGGTAACAAACCAACCAACTTT                                  
+query      clone1                           CC--CCCAGGTAACAAACCAACCAACCTT  ==DD======================X==  se        +
+query      clone2                                          AACCAACCAACCTT                 ===========X==  se        -
+```
 
 ```
+## colorsize snp/indel of output with --colorize-snp-indel 1 
+$ ../src/bam2msa ref.fa out.bwa.bam NC_045512.2_1bp_to_1680bp:15-43 --colorize-snp-indel 1 --output-format 2|cut -f 1-7|column -ts $'\t'|less -RS
+```
+![bam2msa demo image](./test/bam2msa_demo3.png)
 
 
 ```
@@ -56,11 +71,7 @@ $ sh demo.sh
 ok, test passed!
 
 ```
-## for wasm support
+## for wasm  support
 ```
 samtools view data/out.bwa.bam|wasmer  --dir=data/ src/bam2msa_final.wasm -- data/ref.fa STDIN NC_045512.2_1bp_to_1680bp:1-1680 
-```
-## colorsize snp/indel of output with --colorize-snp-indel 1
-```
-bam2msa test/ref.fa test/out.bwa.bam NC_045512.2_1bp_to_1680bp:1-86 --span-whole-region-read-only 0 --colorize-snp-indel 1 |column -ts $'\t'|less -RS
 ```
