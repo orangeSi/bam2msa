@@ -2,6 +2,8 @@ require "colorize"
 require "admiral"
 require "./readfasta"
 
+
+## 20230715: fix bug  change [primary_only &&] to [primary_only >=1 &&]
 ## configure for colorsize snp/indel
 MISMATCH_COLOR = :red
 INDEL_COLOR = :blue
@@ -148,7 +150,7 @@ end
     ref_id = arr[2]
 
     return nil if !rgs.has_key?(ref_id)              # skip alignemtn which ref is not in regions
-    return nil if primary_only && (rflag & 2304) > 0 # not primary alignment + supplementary alignment = 2304
+    return nil if primary_only >=1 && (rflag & 2304) > 0 # not primary alignment + supplementary alignment = 2304
     return nil if (rflag & 4) > 0                    # unmap = 4, filtered unmaped read
 
     query_id = arr[0]
