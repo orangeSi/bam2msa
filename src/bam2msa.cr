@@ -38,7 +38,7 @@ class Bam2Msa < Admiral::Command
     default: 1_i32,
     description: "1 -> query_msa,ref_msa,consensus_msa,ref_cut_region,query_id,r1_or_r2,read_strand,FLAG_in_Bam,POS_in_Bam,MAPQ,CIGAR; 2 -> seq_type,id,alignment,consensus,r1_or_r2,read_strand,FLAG_in_Bam,POS_in_Bam,MAPQ,CIGAR"
   define_help description: "convert bam to msa format for alignment file"
-  define_version "0.1"
+  define_version "0.3"
 
   COMPILE_TIME = Time.local
 
